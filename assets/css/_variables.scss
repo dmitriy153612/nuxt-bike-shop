@@ -1,0 +1,32 @@
+$base-font-size: 16px;
+
+$sm-screen: '(min-width: 640px)';
+$md-screen: '(min-width: 768px)';
+$lg-screen: '(min-width: 1024px)';
+$xl-screen: '(min-width: 1280px)';
+
+$container-max-width: 1568px;
+$header-height: 60px;
+$header-height-lg: 80px;
+
+$transition-duration: 0.2s;
+$transition-function: ease;
+
+$slate-50: #f8fafc;
+$slate-800: #1e293b;
+
+$bg-color: $slate-50;
+$font-color: $slate-800;
+
+// header
+$bg-color-header: var(--p-gray-800);
+$font-color-header: var(--p-yellow-300);
+$hover-color-header: var(--p-red-600);
+$active-color-header: var(--p-red-400);
+
+
+// footer
+$bg-color-footer: var(--p-gray-800);
+$font-color-footer: var(--p-gray-50);
+$hover-color-footer: var(--p-red-600);
+$active-color-footer: var(--p-red-400);

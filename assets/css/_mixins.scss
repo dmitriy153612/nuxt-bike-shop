@@ -1,0 +1,21 @@
+@use "./variables" as vars;
+
+@mixin transition($properties...) {
+  transition-property: $properties;
+  transition-duration: vars.$transition-duration;
+  transition-timing-function: vars.$transition-function;
+}
+
+@mixin hidden {
+  position: absolute;
+  z-index: -100;
+  opacity: 0;
+  transform: scale(0);
+}
+
+@mixin visible {
+  position: static;
+  z-index: 0;
+  opacity: 1;
+  transform: none;
+}
