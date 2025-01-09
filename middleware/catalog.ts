@@ -1,5 +1,4 @@
-
-export default defineNuxtRouteMiddleware(async () => {
-  const { fetchCatalog} = useCatalogStore()
-  await fetchCatalog()
-})
+export default defineNuxtRouteMiddleware(async ({ query }) => {
+  const { fetchCatalog } = useCatalogStore();
+  await fetchCatalog(query);
+});

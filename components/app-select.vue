@@ -10,11 +10,8 @@
 </template>
 
 <script setup lang="ts">
+import type { ISelect } from '@/types/select';
 
-interface ISelect {
-    label: string;
-    id: string;
-}
 const props = defineProps<{
   modelValue: ISelect,
   options: ISelect[],

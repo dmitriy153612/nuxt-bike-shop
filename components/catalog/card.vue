@@ -49,8 +49,6 @@ const props = defineProps<{
   card: ICatalogCard;
 }>();
 
-console.log(props.card);
-
 const checkedSize = ref(props.card.sizes[0]._id);
 </script>
 

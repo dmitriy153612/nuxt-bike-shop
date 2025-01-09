@@ -1,6 +1,6 @@
 <template>
   <div class="size-picker">
-    <title class="size-picker__title">Доступные размеры:</title>
+    <h4 class="size-picker__title">Доступные размеры:</h4>
     <ul class="size-picker__list">
       <li v-for="(size, index) in sizes" :key="index" class="size-picker__item">
         <input
