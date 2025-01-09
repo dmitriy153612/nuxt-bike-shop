@@ -17,7 +17,7 @@ button {
   padding: 10px;
   font-weight: 600;
   margin: 100px;
-  border-radius: 5px;
+  border-radius: 6px;
   @include transition(color, background-color);
   &:hover {
     background-color: var(--secondary);
@@ -25,8 +25,8 @@ button {
   }
 }
 .layout {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr auto;
   min-height: 100vh;
   &__header {
     position: fixed;
@@ -37,21 +37,12 @@ button {
   }
 
   &__content {
-    flex-grow: 1;
-
+    display: grid;
     padding-top: $header-height;
     width: 100%;
     @media #{$lg-screen} {
       padding-top: $header-height-lg;
     }
-  }
-
-  &__main {
-    flex-grow: 1;
-    width: 100%;
-  }
-
-  &__footer {
   }
 }
 </style>

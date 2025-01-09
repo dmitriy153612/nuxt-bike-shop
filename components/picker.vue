@@ -77,7 +77,7 @@ const updatedModelValue = computed({
     justify-content: center;
     align-items: center;
     border: 1px solid var(--secondary);
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 2px;
     font-size: 18px;
     min-width: 1.5em;
