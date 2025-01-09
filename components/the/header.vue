@@ -1,23 +1,23 @@
 <template>
   <header class="header">
     <Container class="header__inner">
-      <BtnIcon icon-name="filter" class="header__filter" />
+      <Btn icon-name="filter" appearance="nav" class="header__filter" />
       <h1 class="header__title">Bike-Shop</h1>
       <Logo />
       <nav>
         <ul class="header__list">
           <li class="header__item">
-            <BtnIcon icon-name="logout" v-if="isAuthorized">
+            <Btn icon-name="logout" appearance="nav" v-if="isAuthorized">
               <span class="header__btn-text">Выйти</span>
-            </BtnIcon>
-            <BtnIcon icon-name="login" v-else>
+            </Btn>
+            <Btn icon-name="login" appearance="nav" to="/product/1" v-else>
               <span class="header__btn-text">Войти</span>
-            </BtnIcon>
+            </Btn>
           </li>
           <li class="header__item">
-            <BtnIcon icon-name="basket" to="/" :count="basketCount">
+            <Btn icon-name="basket" appearance="nav" to="/catalog" :count="basketCount">
               <span class="header__btn-text">Корзина</span>
-            </BtnIcon>
+            </Btn>
           </li>
         </ul>
       </nav>
@@ -33,8 +33,8 @@ const isAuthorized = ref(false);
 <style scoped lang="scss">
 .header {
   height: $header-height;
-  color: $font-color-header;
-  background-color: $bg-color-header;
+  color: var(--primary);
+  background-color: var(--secondary);
   @media #{$lg-screen} {
     height: $header-height-lg;
   }
@@ -45,23 +45,23 @@ const isAuthorized = ref(false);
     height: 100%;
   }
   &__filter {
-    @media #{$md-screen} {
+    @media #{$xl-screen} {
       @include hidden;
     }
   }
   &__title {
     @include hidden;
-    @media #{$md-screen} {
+    @media #{$xl-screen} {
       @include visible;
       font-size: 24px;
       font-weight: 700;
-      text-shadow: 1px 1px 2px rgba($font-color, 0.5);
+      text-shadow: 1px 1px 2px rgba(var(--secondary), 0.5);
     }
   }
   &__list {
     display: flex;
-    column-gap: 16px;
-    padding-right: 12px;
+    column-gap: 8px;
+    padding-right: 8px;
   }
 
   &__btn-text {

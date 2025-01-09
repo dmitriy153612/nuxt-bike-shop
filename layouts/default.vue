@@ -1,30 +1,27 @@
 <template>
   <div class="layout">
     <TheHeader class="layout__header" />
-    <main class="layout__main">
+    <div class="layout__content">
       <slot />
-    </main>
-    <TheFooter class="layout__footer"/>
+    </div>
+    <TheFooter class="layout__footer" />
   </div>
 </template>
 
-<script setup lang="ts">
-
-
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 button {
-  background-color: $font-color-header;
-  color: $bg-color-header;
+  background-color: var(--primary);
+  color: var(--secondary);
   padding: 10px;
   font-weight: 600;
   margin: 100px;
   border-radius: 5px;
   @include transition(color, background-color);
   &:hover {
-    background-color: $bg-color-header;
-    color: $font-color-header;
+    background-color: var(--secondary);
+    color: var(--primary);
   }
 }
 .layout {
@@ -36,18 +33,25 @@ button {
     top: 0;
     right: 0;
     left: 0;
+    z-index: 10;
   }
 
-  &__main {
+  &__content {
     flex-grow: 1;
+
     padding-top: $header-height;
+    width: 100%;
     @media #{$lg-screen} {
       padding-top: $header-height-lg;
     }
   }
 
-  &__footer {
+  &__main {
+    flex-grow: 1;
+    width: 100%;
+  }
 
+  &__footer {
   }
 }
 </style>

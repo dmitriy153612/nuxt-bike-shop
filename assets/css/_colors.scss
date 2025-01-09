@@ -1,0 +1,15 @@
+:root {
+  --primary: var(--p-yellow-300);
+  --secondary: var(--p-gray-800);
+
+  --hover: var(--p-red-600);
+  --active: var(--p-red-400);
+
+  --spinner-overlay: rgba(0, 0, 0, 0.3);
+  
+
+  // select
+  --p-select-border-color: var(--secondary);
+  --p-select-focus-border-color: var(--active);
+  --p-select-option-focus-background: var(--p-gray-200);
+}
