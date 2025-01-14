@@ -21,6 +21,7 @@
   --p-drawer-content-padding: 0;
 }
 
+// drawer
 .p-drawer-header {
   position: absolute;
   top: 8px;
@@ -29,4 +30,9 @@
 }
 .p-drawer {
   width: 240px !important;
+}
+.p-drawer-close-button:focus-visible {
+  border-color: colors.$primary !important;
+  border-width: 2px !important;
+  outline: none !important;
 }

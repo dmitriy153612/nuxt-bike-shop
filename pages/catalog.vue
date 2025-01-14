@@ -20,6 +20,7 @@
           <CatalogFilter class="catalog-page__filter" />
 
           <Drawer
+          :blockScroll="true"
             :visible="globalStore.isFilterOpened"
             @update:visible="() => globalStore.openFilter(false)"
             class="catalog-page__drawer"

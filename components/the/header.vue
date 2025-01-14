@@ -51,13 +51,13 @@ const isAuthorized = ref(false);
     height: 100%;
   }
   &__filter {
-    @media #{$lg-screen} {
+    @media #{$xl-screen} {
       @include hidden;
     }
   }
   &__title {
     @include hidden;
-    @media #{$lg-screen} {
+    @media #{$xl-screen} {
       @include visible;
       font-size: 24px;
       font-weight: 700;
