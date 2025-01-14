@@ -1,0 +1,32 @@
+@use './colors' as colors;
+:root {
+  // select
+  --p-select-border-color: #{colors.$secondary};
+  --p-select-focus-border-color: #{colors.$primary};
+  --p-select-option-focus-background: var(--p-gray-200);
+
+  // input
+  --p-inputtext-focus-border-color: #{colors.$primary} !important;
+  --p-inputtext-color: #{colors.$secondary} !important;
+  --p-floatlabel-focus-color: #{colors.$secondary} !important;
+
+  // spinner
+  --p-progressspinner-color-1: #{colors.$primary};
+  --p-progressspinner-color-2: #{colors.$secondary};
+  --p-progressspinner-color-3: #{colors.$primary};
+  --p-progressspinner-color-4: #{colors.$secondary};
+
+  // drawer
+  --p-drawer-header-padding: 0;
+  --p-drawer-content-padding: 0;
+}
+
+.p-drawer-header {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  justify-content: flex-end;
+}
+.p-drawer {
+  width: 240px !important;
+}

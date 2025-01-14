@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <Container class="header__inner">
-      <Btn icon-name="filter" appearance="nav" class="header__filter" />
+      <Btn @click="() => globalStore.openFilter()" icon-name="filter" appearance="nav" class="header__filter" />
       <h1 class="header__title">Bike-Shop</h1>
       <Logo />
       <nav>
@@ -15,7 +15,12 @@
             </Btn>
           </li>
           <li class="header__item">
-            <Btn icon-name="basket" appearance="nav" to="/catalog" :count="basketCount">
+            <Btn
+              icon-name="basket"
+              appearance="nav"
+              to="/catalog"
+              :count="basketCount"
+            >
               <span class="header__btn-text">Корзина</span>
             </Btn>
           </li>
@@ -26,6 +31,7 @@
 </template>
 
 <script setup lang="ts">
+const globalStore = useGlobalStore()
 const basketCount = ref(8);
 const isAuthorized = ref(false);
 </script>
@@ -33,8 +39,8 @@ const isAuthorized = ref(false);
 <style scoped lang="scss">
 .header {
   height: $header-height;
-  color: var(--primary);
-  background-color: var(--secondary);
+  color: $primary;
+  background-color: $secondary;
   @media #{$lg-screen} {
     height: $header-height-lg;
   }
@@ -45,17 +51,16 @@ const isAuthorized = ref(false);
     height: 100%;
   }
   &__filter {
-    @media #{$xl-screen} {
+    @media #{$lg-screen} {
       @include hidden;
     }
   }
   &__title {
     @include hidden;
-    @media #{$xl-screen} {
+    @media #{$lg-screen} {
       @include visible;
       font-size: 24px;
       font-weight: 700;
-      text-shadow: 1px 1px 2px rgba(var(--secondary), 0.5);
     }
   }
   &__list {

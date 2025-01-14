@@ -4,12 +4,12 @@
       <div class="button__text" v-if="$slots.default">
         <slot />
       </div>
-      <span class="button__icon-wrapper">
+      <div class="button__icon-wrapper" v-if="iconName">
         <component :is="icon" />
         <div class="button__badge" v-if="count !== undefined">
           {{ count }}
         </div>
-      </span>
+      </div>
     </div>
   </component>
 </template>
@@ -18,12 +18,12 @@
 const props = withDefaults(
   defineProps<{
     to?: string;
-    iconName: string;
+    iconName?: string;
     count?: number;
-    appearance?: 'nav' | 'submit'
+    appearance?: 'nav' | 'submit' | 'cyrcle';
   }>(),
   {
-    appearance: 'submit'
+    appearance: 'submit',
   }
 );
 
@@ -40,7 +40,8 @@ const icon = computed(() => {
 const btnClass = ref({
   'button--nav': props.appearance === 'nav',
   'button--submit': props.appearance === 'submit',
-})
+  'button--cyrcle': props.appearance === 'cyrcle',
+});
 </script>
 
 <style scoped lang="scss">
@@ -48,34 +49,33 @@ const btnClass = ref({
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: max-content;
   border: 2px solid transparent;
   border-radius: 6px;
   outline: none;
-  background-color: var(--secondary);
-  color: var(--primary);
+  background-color: $secondary;
+  color: $primary;
   @include transition(border-color);
 
   &:focus-visible {
-    border-color: var(--primary);
+    border-color: $primary;
   }
   @media #{$md-screen} {
     &:hover & {
       &__inner {
-        color: var(--hover);
+        color: $alert;
       }
       &__badge {
-        background-color: var(--hover);
+        background-color: $alert;
       }
     }
   }
 
   &:active & {
     &__inner {
-      color: var(--active);
+      color: $alert;
     }
     &__badge {
-      background-color: var(--active);
+      background-color: $alert;
     }
   }
 
@@ -98,6 +98,10 @@ const btnClass = ref({
       width: 34px;
     }
   }
+  &--cyrcle {
+    border-radius: 50%;
+    width: 30px;
+  }
 
   &__inner {
     display: flex;
@@ -110,6 +114,7 @@ const btnClass = ref({
 
   &__icon-wrapper {
     position: relative;
+    font-size: 0;
   }
 
   &__badge {
@@ -117,11 +122,11 @@ const btnClass = ref({
     top: -5%;
     right: 0;
     padding: 2px 4px;
-    background-color: var(--primary);
+    background-color: $primary;
     border-radius: 50%;
     font-size: 14px;
     font-weight: 500;
-    color: var(--secondary);
+    color: $secondary;
     line-height: 1;
     transform: translateX(50%);
     @include transition(background-color);

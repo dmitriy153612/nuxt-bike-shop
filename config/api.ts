@@ -1,6 +1,5 @@
 const BASE_API_URL: string = 'http://147.45.183.40:27017'
 
-
 export const CATALOG_URL: string = `${BASE_API_URL}/catalog`
 export const PRODUCT_URL: string = `${BASE_API_URL}/catalog/product`
 

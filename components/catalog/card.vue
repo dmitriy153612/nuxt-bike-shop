@@ -58,7 +58,7 @@ const checkedSize = ref(props.card.sizes[0]._id);
   height: 100%;
   padding: 20px;
   border-radius: 14px;
-  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: $boxShadow;
   overflow: hidden;
   &__inner {
     display: grid;
@@ -78,14 +78,14 @@ const checkedSize = ref(props.card.sizes[0]._id);
     height: 50px;
     width: 50px;
     &-svg {
-      color: var(--primary);
+      color: $primary;
     }
     &-percent {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: var(--hover);
+      color: $alert;
       font-size: 16px;
     }
   }
@@ -107,7 +107,7 @@ const checkedSize = ref(props.card.sizes[0]._id);
     text-align: center;
     font-size: 20px;
     font-weight: 800;
-    color: var(--secondary);
+    color: $secondary;
   }
   &__size-picker {
     align-self: flex-end;
@@ -116,7 +116,7 @@ const checkedSize = ref(props.card.sizes[0]._id);
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    color: var(--secondary);
+    color: $secondary;
     &-current {
       position: relative;
       bottom: -2px;

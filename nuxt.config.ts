@@ -2,7 +2,7 @@
 import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
 const MyPreset = definePreset(Aura, {
-  
+
 });
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
@@ -30,6 +30,7 @@ export default defineNuxtConfig({
         scss: {
           additionalData: `
           @use "~/assets/css/_variables.scss" as *;
+          @use "~/assets/css/_colors.scss" as *;
           @use "~/assets/css/_mixins.scss" as *;
           `
         }
@@ -47,7 +48,7 @@ export default defineNuxtConfig({
     },
     autoImport: false,
     components: {
-      include: ['ProgressSpinner', 'Select']
+      include: ['ProgressSpinner', 'Select', 'InputNumber', 'FloatLabel', 'Drawer']
     }
   },
 });

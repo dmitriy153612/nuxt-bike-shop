@@ -1,9 +1,12 @@
 <template>
-  <ul class="catalog">
+  <div class="catalog">
+    <ul class="catalog__list">
     <li class="catalog__item" v-for="card in catalog" :key="card._id">
       <CatalogCard :card="card" />
     </li>
   </ul>
+  </div>
+
 </template>
 
 <script setup lang="ts">
@@ -16,8 +19,10 @@ defineProps<{
 
 <style scoped lang="scss">
 .catalog {
-  display: grid;
+  &__list {
+    display: grid;
   grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
   gap: 14px;
+  }
 }
 </style>

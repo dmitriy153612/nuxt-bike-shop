@@ -43,35 +43,27 @@ export interface ICatalogConfig {
   totalProducts: number;
 }
 
-export interface IFilterParams {
-  brandId?: string | string[];
-  colorId?: string | string[];
-  sizeId?: string | string[];
-  maxPrice?: string;
-  minPrice?: string;
-}
-
 export interface ISortingQueryObj {
   sorting?: string;
 }
 
-export type TCatalogRequestParams = { page?: number } & ISortingQueryObj & IFilterParams;
-
-
-export function isTCatalogRequestParams(obj: unknown): obj is TCatalogRequestParams {
-  if (typeof obj !== 'object' || obj === null) return false;
-
-  const validStringOrArray = (val: unknown) =>
-    typeof val === 'string' || (Array.isArray(val) && val.every((item) => typeof item === 'string'));
-
-  return (
-    ('page' in obj && (obj.page === undefined || typeof obj.page === 'number')) &&
-    ('sorting' in obj && (obj.sorting === undefined || typeof obj.sorting === 'string')) &&
-    ('brandId' in obj && (obj.brandId === undefined || validStringOrArray(obj.brandId)) )&&
-    ('colorId' in obj && (obj.colorId === undefined || validStringOrArray(obj.colorId))) &&
-    ('sizeId' in obj && (obj.sizeId === undefined || validStringOrArray(obj.sizeId))) &&
-    ('maxPrice' in obj && (obj.maxPrice === undefined || typeof obj.maxPrice === 'string')) &&
-    ('minPrice' in obj && (obj.minPrice === undefined || typeof obj.minPrice === 'string'))
-  );
+export type TCatalogRequestParams = { 
+  page?: number 
+  brandId?: string[];
+  colorId?: string[];
+  sizeId?: string[];
+  maxPrice?: string;
+  minPrice?: string;
 }
+
+export interface IFilter {
+  brandId: string[];
+  colorId: string[];
+  sizeId: string[];
+  minPrice: number | undefined;
+  maxPrice: number | undefined;
+}
+
+
+
 

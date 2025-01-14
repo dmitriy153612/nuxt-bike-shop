@@ -1,21 +1,25 @@
 <template>
-<NuxtLayout>
-  <NuxtPage />
-</NuxtLayout>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 
-<teleport to="body">
-  <Transition>
-    <Spinner type="page" v-if="globalStore.isPageSpinnerShown"/>
-  </Transition>
-</teleport>
+
+
+  <teleport to="body">
+    <Transition>
+      <Spinner type="page" v-if="globalStore.isPageSpinnerShown" />
+    </Transition>
+  </teleport>
 </template>
 
 <script setup lang="ts">
-
-const globalStore = useGlobalStore()
+const globalStore = useGlobalStore();
 </script>
 
 <style lang="scss" scoped>
+.aa {
+  padding-top: 100px;
+}
 .v-enter-active,
 .v-leave-active {
   @include transition(opacity);

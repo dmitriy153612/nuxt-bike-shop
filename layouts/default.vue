@@ -12,16 +12,16 @@
 
 <style scoped lang="scss">
 button {
-  background-color: var(--primary);
-  color: var(--secondary);
+  background-color: $primary;
+  color: $secondary;
   padding: 10px;
   font-weight: 600;
   margin: 100px;
   border-radius: 6px;
   @include transition(color, background-color);
   &:hover {
-    background-color: var(--secondary);
-    color: var(--primary);
+    background-color: $secondary;
+    color: $primary;
   }
 }
 .layout {
@@ -33,7 +33,7 @@ button {
     top: 0;
     right: 0;
     left: 0;
-    z-index: 10;
+    z-index: $header-z-index;
   }
 
   &__content {

@@ -1,4 +1,10 @@
 export default defineNuxtRouteMiddleware(async ({ query }) => {
-  const { fetchCatalog } = useCatalogStore();
-  await fetchCatalog(query);
+  const { showPageSpinner } = useGlobalStore()
+  const { fetchFilter } = useFilterStore()
+  const { fetchCatalog } = useCatalogStore()
+  
+  showPageSpinner(true)
+  await fetchCatalog(query)
+  await fetchFilter()
+  showPageSpinner(false)
 });

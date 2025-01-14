@@ -3,19 +3,29 @@
     <main class="catalog-page__main">
       <section class="catalog-page__sec">
         <Container class="catalog-page__inner">
-          <PageTitle>Mountain bikes</PageTitle>
-          <AppSelect
-            class="catalog-page__select"
-            :options="SORTING_OPTIONS"
-            v-model="sorting"
-          />
-          <div class="catalog-page__catalog-wrapper">
-            <Catalog
+          <PageTitle class="catalog-page__title">Mountain bikes</PageTitle>
+          <div class="catalog-page__select">
+            <AppSelect :options="SORTING_OPTIONS" v-model="sorting" />
+          </div>
+
+          <Catalog
             class="catalog-page__catalog"
             :catalog="catalogStore.catalog"
           />
-          </div>
-          <CatalogPagination class="catalog-page__pagination" />
+
+          <CatalogPagination
+            class="catalog-page__pagination"
+            v-if="catalogStore.catalog.length"
+          />
+          <CatalogFilter class="catalog-page__filter" />
+
+          <Drawer
+            :visible="globalStore.isFilterOpened"
+            @update:visible="() => globalStore.openFilter(false)"
+            class="catalog-page__drawer"
+          >
+            <CatalogFilter />
+          </Drawer>
         </Container>
       </section>
     </main>
@@ -23,12 +33,14 @@
 </template>
 
 <script setup lang="ts">
+import { SORTING_OPTIONS } from '@/config/catalogVariables';
+import type { ISelect } from '@/types/select';
+
+const globalStore = useGlobalStore();
+
 definePageMeta({
   middleware: 'catalog',
 });
-
-import { SORTING_OPTIONS } from '@/config/catalogVariables';
-import type { ISelect } from '@/types/select';
 
 const catalogStore = useCatalogStore();
 const route = useRoute();
@@ -37,7 +49,7 @@ const router = useRouter();
 const sorting = ref(SORTING_OPTIONS[0]);
 
 function getSortingObj(): ISelect | null {
-  if (route.query.hasOwnProperty('sorting')) {
+  if (route.query?.sorting) {
     const index = SORTING_OPTIONS.findIndex(
       (option) => option.id === route.query.sorting
     );
@@ -86,20 +98,62 @@ watch(
     height: 100%;
   }
   &__inner {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'title'
+      'select'
+      'catalog'
+      'pagination';
+
+    @media #{$md-screen} {
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        'title select'
+        'catalog catalog'
+        'pagination pagination';
+    }
+    @media #{$xl-screen} {
+      grid-template-columns: auto 1fr;
+      grid-template-areas:
+        'select title'
+        'filter catalog'
+        '. pagination';
+    }
+  }
+  &__title {
+    grid-area: title;
+    text-align: center;
+    @media #{$md-screen} {
+      margin-right: 24px;
+    }
   }
   &__select {
     margin-bottom: 32px;
     width: max-content;
+    grid-area: select;
+    @media #{$md-screen} {
+      padding-top: 16px;
+      margin-bottom: 0;
+    }
   }
-  &__catalog-wrapper {
+  &__catalog {
+    grid-area: catalog;
+    position: relative;
+    z-index: 1;
     flex-grow: 1;
     margin-bottom: 34px;
   }
   &__pagination {
+    grid-area: pagination;
     padding-bottom: 34px;
+  }
+  &__filter {
+    grid-area: filter;
+    display: none;
+    @media #{$xl-screen} {
+      display: block;
+    }
   }
 }
 </style>

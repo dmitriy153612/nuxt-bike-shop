@@ -76,12 +76,12 @@ const updatedModelValue = computed({
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid var(--secondary);
+    border: 1px solid $secondary;
     border-radius: 6px;
     padding: 2px;
     font-size: 18px;
     min-width: 1.5em;
-    color: var(--secondary);
+    color: $secondary;
     cursor: pointer;
     @include transition(border-color, color, transform, background-color);
   }
@@ -96,13 +96,13 @@ const updatedModelValue = computed({
 
   &__input:checked + &__label {
     color: white;
-    border-color: var(--secondary);
-    background-color: var(--secondary);
+    border-color: $secondary;
+    background-color: $secondary;
     transform: scale(1.3);
   }
 
   &__input:focus + &__label {
-    color: var(--primary);
+    color: $primary;
   }
 }
 </style>

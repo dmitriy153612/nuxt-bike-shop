@@ -1,26 +1,48 @@
 <template>
-  <div class="overlay" @mousedown.self="emitClose">
+  <div class="overlay" :class="overlayClass" @mousedown.self="emitClose">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
+const props = withDefaults(defineProps<{
+  contentPosition?: 'center' | 'left'
+}>(), {
+  contentPosition: 'center'
+})
 const emit = defineEmits<{
-  (e: 'colse'): void;
+  (e: 'close'): void;
 }>();
 
 function emitClose() {
-  emit('colse');
+  emit('close');
 }
+
+const overlayClass = ref({
+  'overlay--center': props.contentPosition === 'center',
+  'overlay--left': props.contentPosition === 'left'
+})
 </script>
 
 <style scoped lang="scss">
 .overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  z-index: $overlay-z-index;
+  background-color: $overlay;
   display: flex;
-  justify-content: center;
-  align-items: center;
+
+  &--center {
+    justify-content: center;
+    align-items: center;
+  }
+  &--left {
+    justify-content: flex-start;
+    @media #{$lg-screen} {
+      position: static;
+      z-index: 0;
+      background-color: transparent;
+    }
+  }
 }
 </style>

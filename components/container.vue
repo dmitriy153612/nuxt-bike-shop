@@ -13,13 +13,13 @@
   width: 100%;
   max-width: $container-max-width;
   margin-inline: auto;
-  padding-inline: 16px;
+  padding-inline: $container-inline-padding;
 
   @media #{$sm-screen} {
-    padding-inline: 32px;
+    padding-inline: $container-inline-padding-sm;
   }
   @media #{$lg-screen} {
-    padding-inline: 48px;
+    padding-inline: $container-inline-padding-lg;
   }
 }
 </style>

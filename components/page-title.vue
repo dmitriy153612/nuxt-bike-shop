@@ -7,6 +7,6 @@
 <style scoped>
 .title {
   padding-block: 16px 32px;
-  color: var(--secondary);
+  color: $secondary;
 }
 </style>

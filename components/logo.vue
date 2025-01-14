@@ -12,12 +12,12 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--primary);
-  box-shadow: 0px 0px 6px 4px var(--primary);
+  background-color: $primary;
+  box-shadow: 0px 0px 6px 4px $primary;
   outline: none;
   @include transition(box-shadow);
   &:focus-visible {
-    box-shadow: 0px 0px 10px 6px var(--primary);
+    box-shadow: 0px 0px 10px 6px $primary;
   }
 
   @media #{$lg-screen} {

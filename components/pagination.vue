@@ -2,7 +2,7 @@
   <div class="pagination">
     <div class="pagination__inner">
       <button
-      :disabled="modelValue === 1"
+        :disabled="modelValue === 1"
         class="pagination__btn pagination__btn--change"
         @click="previousPage"
       >
@@ -19,7 +19,11 @@
           </button>
         </li>
       </ul>
-      <button :disabled="modelValue === totalPages" class="pagination__btn pagination__btn--change" @click="nextPage">
+      <button
+        :disabled="modelValue === totalPages"
+        class="pagination__btn pagination__btn--change"
+        @click="nextPage"
+      >
         &#9658;
       </button>
     </div>
@@ -53,7 +57,6 @@ function previousPage() {
 function emitPage(newPage: number) {
   emit('update:modelValue', newPage);
 }
-
 </script>
 
 <style scoped lang="scss">
@@ -64,7 +67,7 @@ function emitPage(newPage: number) {
     align-items: flex-start;
     column-gap: 4px;
     font-size: 24px;
-    color: var(--secondary);
+    color: $secondary;
   }
   &__list {
     display: flex;
@@ -80,7 +83,7 @@ function emitPage(newPage: number) {
     border-radius: 6px;
     @include transition(border-color, color);
     &:focus-visible {
-      border-color: var(--secondary);
+      border-color: $secondary;
     }
     &:disabled {
       opacity: 0.5;
@@ -90,7 +93,7 @@ function emitPage(newPage: number) {
       font-weight: 600;
     }
     &--checked {
-      color: var(--hover);
+      color: $alert;
     }
   }
 }
