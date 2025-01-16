@@ -1,14 +1,11 @@
 <template>
-<FloatLabel variant="on" class="wrapper">
-    <InputNumber class="wrapper__input" v-model="updatedModelValue" :min="0" :fluid="true" suffix=" ₽" :inputId="uniqId" />
+<FloatLabel variant="on">
+    <InputNumber v-model="updatedModelValue" :min="0" :fluid="true" suffix=" ₽" :inputId="uniqId" />
     <label :for="uniqId">{{ label }}</label>
 </FloatLabel>
 </template>
 
 <script setup lang="ts">
-const { $uniqId } = useNuxtApp();
-const uniqId = $uniqId();
-
 const props = defineProps<{
   modelValue: number | undefined,
   label: string
@@ -28,4 +25,7 @@ const updatedModelValue = computed({
     emit('update:modelValue', updatedValue)
   }
 })
+
+const uniqId = useId()
+
 </script>

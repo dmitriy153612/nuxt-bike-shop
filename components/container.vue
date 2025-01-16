@@ -1,11 +1,23 @@
 <template>
-  <div class="container">
+  <div class="container" :class="containerClass">
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    type?: 'header' | 'section';
+  }>(),
+  {
+    type: 'section',
+  }
+);
 
+const containerClass = ref({
+  'container--section': props.type === 'section',
+  'container--header': props.type === 'section',
+});
 </script>
 
 <style scoped lang="scss">
@@ -20,6 +32,19 @@
   }
   @media #{$lg-screen} {
     padding-inline: $container-inline-padding-lg;
+  }
+
+  &--section {
+    padding-top: $container-padding-top;
+    @media #{$sm-screen} {
+      padding-top: $container-padding-top-sm;
+    }
+    @media #{$md-screen} {
+      padding-top: $container-padding-top-md;
+    }
+    @media #{$lg-screen} {
+      padding-top: $container-padding-top-lg;
+    }
   }
 }
 </style>

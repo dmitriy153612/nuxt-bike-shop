@@ -4,9 +4,10 @@
   </h2>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .title {
-  padding-block: 16px 32px;
+  font-size: 26px;
+  font-weight: 700;
   color: $secondary;
 }
 </style>

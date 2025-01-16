@@ -17,7 +17,7 @@
           <NuxtImg
             class="card__img"
             :src="card.pictures[0]"
-            :alt="card.title"
+            alt="изображение байка"
           />
         </div>
         <h3 class="card__title">{{ card.title }}</h3>
@@ -36,7 +36,7 @@
             {{ $formatCurrency(card.oldPrice) }}
           </span>
         </p>
-        <Btn class="card__btn" icon-name="basket"> В корзину </Btn>
+        <Btn class="card__btn" icon-name="basket" @click="addToBasket"> В корзину </Btn>
       </div>
     </div>
   </article>
@@ -49,7 +49,17 @@ const props = defineProps<{
   card: ICatalogCard;
 }>();
 
+const basketStore = useBasketStore()
+
 const checkedSize = ref(props.card.sizes[0]._id);
+
+function addToBasket() {
+  basketStore.fetchAddProduct({
+    productId: props.card._id,
+    sizeId: checkedSize.value,
+    amount: 1,
+  })
+}
 </script>
 
 <style scoped lang="scss">

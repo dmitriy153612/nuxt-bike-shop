@@ -1,8 +1,17 @@
 export const useGlobalStore = defineStore('globalStore', () => {
   const isPageSpinnerShown = ref(false)
   const isFilterOpened = ref(false)
+  const isLoginModalOpened = ref(false)
+  const isRegistrationModalOpened = ref(false)
 
-  function showPageSpinner(show: boolean): void {
+  function showRegistrationModal(show: boolean) {
+    isRegistrationModalOpened.value = show
+  }
+
+  function showLoginModal(show: boolean) {
+    isLoginModalOpened.value = show
+  }
+  function showPageSpinner(show: boolean) {
     isPageSpinnerShown.value = show
   }
 
@@ -20,5 +29,11 @@ export const useGlobalStore = defineStore('globalStore', () => {
 
     openFilter,
     isFilterOpened,
+
+    showLoginModal,
+    isLoginModalOpened,
+
+    showRegistrationModal,
+    isRegistrationModalOpened,
   }
 })

@@ -2,6 +2,7 @@
   <div class="pagination">
     <div class="pagination__inner">
       <button
+      type="button"
         :disabled="modelValue === 1"
         class="pagination__btn pagination__btn--change"
         @click="previousPage"
@@ -9,17 +10,20 @@
         &#9668;
       </button>
       <ul class="pagination__list">
-        <li class="pagination__item" v-for="page in totalPages">
+        <li class="pagination__item" v-for="page in totalPages" :key="page">
           <button
+            type="button"
             class="pagination__btn pagination__btn--num"
             :class="{ 'pagination__btn--checked': page === modelValue }"
             @click="() => emitPage(page)"
+            :aria-label="`перйти на страницу ${page}`"
           >
             {{ page }}
           </button>
         </li>
       </ul>
       <button
+      type="button"
         :disabled="modelValue === totalPages"
         class="pagination__btn pagination__btn--change"
         @click="nextPage"

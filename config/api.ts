@@ -1,4 +1,5 @@
 const BASE_API_URL: string = 'http://147.45.183.40:27017'
+// const BASE_API_URL: string = 'http://localhost:27017'
 
 export const CATALOG_URL: string = `${BASE_API_URL}/catalog`
 export const PRODUCT_URL: string = `${BASE_API_URL}/catalog/product`
@@ -11,11 +12,11 @@ export const LOGIN_URL: string = `${BASE_API_URL}/login`
 export const REGISTRATION_URL: string = `${BASE_API_URL}/registration`
 export const CHECK_AUTH_URL: string = `${BASE_API_URL}/check-auth`
 
-export const CART_URL: string = `${BASE_API_URL}/cart`
-export const CART_ADD_URL: string = `${BASE_API_URL}/cart/add`
-export const CART_DELETE_URL: string = `${BASE_API_URL}/cart/delete`
-export const CART_CHANGE_AMOUNT_URL: string = `${BASE_API_URL}/cart/change-amount`
-export const CART_SELECT_CART_PRODUCT_URL: string = `${BASE_API_URL}/cart/select-product`
+export const BASKET_URL: string = `${BASE_API_URL}/cart`
+export const BASKET_ADD_URL: string = `${BASE_API_URL}/cart/add`
+export const BASKET_DELETE_URL: string = `${BASE_API_URL}/cart/delete`
+export const BASKET_CHANGE_AMOUNT_URL: string = `${BASE_API_URL}/cart/change-amount`
+export const BASKET_SELECT_PRODUCT_URL: string = `${BASE_API_URL}/cart/select-product`
 
 export const ORDER_GET_ORDER_URL: string = `${BASE_API_URL}/order`
 export const ORDER_GET_ORDER_CONFIG_URL: string = `${BASE_API_URL}/order-config`

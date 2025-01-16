@@ -3,10 +3,13 @@
     <main class="catalog-page__main">
       <section class="catalog-page__sec">
         <Container class="catalog-page__inner">
+          {{ 123 }}
           <PageTitle class="catalog-page__title">Mountain bikes</PageTitle>
-          <div class="catalog-page__select">
-            <AppSelect :options="SORTING_OPTIONS" v-model="sorting" />
-          </div>
+          <AppSelect
+          class="catalog-page__select"
+            :options="SORTING_OPTIONS"
+            v-model="sorting"
+          />
 
           <Catalog
             class="catalog-page__catalog"
@@ -16,11 +19,11 @@
           <CatalogPagination
             class="catalog-page__pagination"
             v-if="catalogStore.catalog.length"
-          />
-          <CatalogFilter class="catalog-page__filter" />
+          /> 
+          <CatalogFilter class="catalog-page__filter" /> 
 
           <Drawer
-          :blockScroll="true"
+            :blockScroll="true"
             :visible="globalStore.isFilterOpened"
             @update:visible="() => globalStore.openFilter(false)"
             class="catalog-page__drawer"
@@ -36,6 +39,10 @@
 <script setup lang="ts">
 import { SORTING_OPTIONS } from '@/config/catalogVariables';
 import type { ISelect } from '@/types/select';
+
+definePageMeta({
+  title: 'Каталог',
+});
 
 const globalStore = useGlobalStore();
 
@@ -100,6 +107,7 @@ watch(
   }
   &__inner {
     display: grid;
+    grid-template-rows: auto auto 1fr auto;
     grid-template-columns: 1fr;
     grid-template-areas:
       'title'
@@ -107,7 +115,9 @@ watch(
       'catalog'
       'pagination';
 
+
     @media #{$md-screen} {
+      grid-template-rows: auto 1fr auto;
       grid-template-columns: auto 1fr;
       grid-template-areas:
         'title select'
@@ -115,7 +125,7 @@ watch(
         'pagination pagination';
     }
     @media #{$xl-screen} {
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto 1fr auto;
       grid-template-areas:
         'select title'
         'filter catalog'
@@ -125,8 +135,18 @@ watch(
   &__title {
     grid-area: title;
     text-align: center;
+    align-self: center;
+    margin-bottom: 24px;
+    @media #{$sm-screen} {
+      margin-right: 24px;
+
+    }
     @media #{$md-screen} {
       margin-right: 24px;
+      margin-bottom: 0;
+    }
+    @media #{$xl-screen} {
+      margin-right: 0;
     }
   }
   &__select {
@@ -134,7 +154,6 @@ watch(
     width: max-content;
     grid-area: select;
     @media #{$md-screen} {
-      padding-top: 16px;
       margin-bottom: 0;
     }
   }
@@ -144,6 +163,9 @@ watch(
     z-index: 1;
     flex-grow: 1;
     margin-bottom: 34px;
+    @media #{$md-screen} {
+      padding-top: 40px;
+    }
   }
   &__pagination {
     grid-area: pagination;

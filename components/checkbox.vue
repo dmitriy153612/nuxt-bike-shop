@@ -28,8 +28,8 @@ const updatedModelValue = computed({
   get: () => props.modelValue,
   set: (newValue) => emit('update:modelValue', newValue),
 });
-const { $uniqId } = useNuxtApp();
-const uniqId = $uniqId();
+
+const uniqId = useId()
 </script>
 
 <style scoped lang="scss">

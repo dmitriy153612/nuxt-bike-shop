@@ -1,7 +1,7 @@
 <template>
   <div class="filter">
-    <form class="filter__form">
-      <h4 class="filter__title">Фильтр</h4>
+    <form class="filter__form" @submit.prevent>
+      <h3 class="filter__title">Фильтр</h3>
       <CatalogFilterFieldset
         v-model="filter.brandId"
         :properties="filterStore.brands"
@@ -22,8 +22,7 @@
         <CatalogFilterInput v-model="filter.maxPrice" label="Цена до" />
       </div>
       <div class="filter__buttons">
-        <Btn class="filter__btn" @click.prevent="setFilterToRouter"
-          >Применить</Btn
+        <Btn class="filter__btn" @click.prevent="setFilterToRouter" type="submit" >Применить</Btn
         >
         <Btn class="filter__btn" @click.prevent="resetFilter">Сбросить</Btn>
       </div>

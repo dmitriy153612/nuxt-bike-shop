@@ -10,5 +10,6 @@
 .footer {
   padding-block: 24px;
   background-color: $secondary;
+  color: white;
 }
 </style>

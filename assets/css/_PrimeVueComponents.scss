@@ -1,24 +1,29 @@
-@use './colors' as colors;
+@use './variables' as variables;
+@use './mixins' as mixins;
+
 :root {
   // select
-  --p-select-border-color: #{colors.$secondary};
-  --p-select-focus-border-color: #{colors.$primary};
+  --p-select-border-color: #{variables.$secondary};
+  --p-select-focus-border-color: #{variables.$primary};
   --p-select-option-focus-background: var(--p-gray-200);
 
   // input
-  --p-inputtext-focus-border-color: #{colors.$primary} !important;
-  --p-inputtext-color: #{colors.$secondary} !important;
-  --p-floatlabel-focus-color: #{colors.$secondary} !important;
+  --p-inputtext-focus-border-color: #{variables.$primary} !important;
+  --p-inputtext-color: #{variables.$secondary} !important;
+  --p-floatlabel-focus-color: #{variables.$secondary} !important;
 
   // spinner
-  --p-progressspinner-color-1: #{colors.$primary};
-  --p-progressspinner-color-2: #{colors.$secondary};
-  --p-progressspinner-color-3: #{colors.$primary};
-  --p-progressspinner-color-4: #{colors.$secondary};
+  --p-progressspinner-color-1: #{variables.$primary};
+  --p-progressspinner-color-2: #{variables.$primary};
+  --p-progressspinner-color-3: #{variables.$primary};
+  --p-progressspinner-color-4: #{variables.$primary};
 
   // drawer
   --p-drawer-header-padding: 0;
   --p-drawer-content-padding: 0;
+
+  // toast
+  --p-toast-width: min(300px, 96%);
 }
 
 // drawer
@@ -32,7 +37,28 @@
   width: 240px !important;
 }
 .p-drawer-close-button:focus-visible {
-  border-color: colors.$primary !important;
+  border-color: variables.$primary !important;
   border-width: 2px !important;
   outline: none !important;
+  @include mixins.transition(border-color);
 }
+
+// dialog
+.p-dialog-header {
+  padding-top: 16px;
+  padding-bottom: 0;
+}
+.p-dialog-mask {
+  padding: 16px;
+}
+.p-dialog-close-button {
+  outline: none !important;
+  @include mixins.transition(border-color);
+  &:focus-visible {
+    border-color: variables.$primary !important;
+    border-width: 2px !important;
+  }
+}
+
+
+

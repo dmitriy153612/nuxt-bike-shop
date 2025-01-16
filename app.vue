@@ -3,12 +3,14 @@
     <NuxtPage />
   </NuxtLayout>
 
-
-
   <teleport to="body">
     <Transition>
       <Spinner type="page" v-if="globalStore.isPageSpinnerShown" />
     </Transition>
+
+    <ModalLogin />
+    <ModalRegistration />
+    <Toast position="top-center"/>
   </teleport>
 </template>
 
@@ -17,9 +19,6 @@ const globalStore = useGlobalStore();
 </script>
 
 <style lang="scss" scoped>
-.aa {
-  padding-top: 100px;
-}
 .v-enter-active,
 .v-leave-active {
   @include transition(opacity);

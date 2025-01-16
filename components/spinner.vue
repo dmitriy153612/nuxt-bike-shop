@@ -21,22 +21,21 @@ const props = withDefaults(
 const config = computed(() => {
   if (props.type === 'page') {
     return {
-      strokeWidth: '4',
+      strokeWidth: '6',
       class: 'overlay--page',
       style: { height: '100px', width: '100px' },
     };
   }
   return {
-    strokeWidth: '2',
+    strokeWidth: '4',
     class: 'overlay--btn',
-    style: { height: '0.5em', width: '0.5em' },
+    style: { height: '1.5em', width: '1.5em' },
   };
 });
 </script>
 
 <style scoped lang="scss">
 .overlay {
-  z-index: $spinner-z-index;
   inset: 0;
   display: flex;
   justify-content: center;
@@ -44,6 +43,13 @@ const config = computed(() => {
   background-color: $spinnerScreenOverlay;
   &--page {
     position: fixed;
+    z-index: $spinner-z-index;
+  }
+  &--btn {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: $secondary;
   }
 }
 </style>

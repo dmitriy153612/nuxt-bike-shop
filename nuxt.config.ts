@@ -1,27 +1,42 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
-const MyPreset = definePreset(Aura, {
-
-});
+const MyPreset = definePreset(Aura, {});
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+  compatibilityDate: '2025-01-14',
   devtools: { enabled: true },
-  ssr: false,
+  ssr: true,
   app: {
-    baseURL: '/'
+    baseURL: '/',
+    head: {
+      meta: [
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+        },
+        {
+          name: 'description',
+          content: 'Интернет магазин велосипедов Bike-Shop',
+        }
+      ],
+      title: 'Bike-Shop',
+      htmlAttrs: {
+        lang: 'ru',
+      },
+    },
   },
   routeRules: {
     '/': {
-      redirect: '/catalog'
-    }
+      redirect: '/catalog',
+    },
   },
   modules: [
     '@primevue/nuxt-module',
     '@vueuse/nuxt',
     '@nuxt/fonts',
     '@pinia/nuxt',
-    '@nuxt/image'
+    '@nuxt/image',
+    '@nuxtjs/html-validator',
   ],
   css: ['normalize.css', '@/assets/css/main.scss'],
   vite: {
@@ -30,15 +45,14 @@ export default defineNuxtConfig({
         scss: {
           additionalData: `
           @use "~/assets/css/_variables.scss" as *;
-          @use "~/assets/css/_colors.scss" as *;
           @use "~/assets/css/_mixins.scss" as *;
-          `
-        }
-      }
-    }
+          `,
+        },
+      },
+    },
   },
   build: {
-    analyze: true,
+    analyze: false,
   },
   primevue: {
     options: {
@@ -48,7 +62,18 @@ export default defineNuxtConfig({
     },
     autoImport: false,
     components: {
-      include: ['ProgressSpinner', 'Select', 'InputNumber', 'FloatLabel', 'Drawer']
-    }
+      include: [
+        'ProgressSpinner',
+        'Select',
+        'InputNumber',
+        'FloatLabel',
+        'Drawer',
+        'Dialog',
+        'InputText',
+        'Toast',
+        'Message',
+        'Password',
+      ],
+    },
   },
 });

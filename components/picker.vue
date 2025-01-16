@@ -2,7 +2,7 @@
   <div class="size-picker">
     <h4 class="size-picker__title">Доступные размеры:</h4>
     <ul class="size-picker__list">
-      <li v-for="(size, index) in sizes" :key="index" class="size-picker__item">
+      <li v-for="(size, index) in sizes" :key="uniqIds[index]" class="size-picker__item">
         <input
           :id="uniqIds[index]"
           v-model="updatedModelValue"
@@ -20,7 +20,6 @@
 
 <script lang="ts" setup>
 import { type ISize } from '@/types/catalog';
-const { $uniqId } = useNuxtApp();
 
 const props = defineProps<{
   modelValue: string;
@@ -31,7 +30,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', modelValue: string): void;
 }>();
 
-const uniqIds = Array.from({ length: props.sizes.length }, () => $uniqId());
+const uniqIds = Array.from({ length: props.sizes.length }, () => useId());
 
 const updatedModelValue = computed({
   get: () => props.modelValue,

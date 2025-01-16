@@ -1,16 +1,24 @@
 <template>
-  <component :is="component" v-bind="{ to }" class="button" :class="btnClass">
-    <div class="button__inner">
-      <div class="button__text" v-if="$slots.default">
+  <component
+    :is="component"
+    v-bind="{ to }"
+    class="button"
+    :class="btnClass"
+    :disabled="showSpinner"
+    :type="typeAttrs"
+  >
+    <span class="button__inner">
+      <span class="button__text" v-if="$slots.default">
         <slot />
-      </div>
-      <div class="button__icon-wrapper" v-if="iconName">
+      </span>
+      <span class="button__icon-wrapper" v-if="iconName">
         <component :is="icon" />
-        <div class="button__badge" v-if="count !== undefined">
+        <span class="button__badge" v-if="count !== undefined">
           {{ count }}
-        </div>
-      </div>
-    </div>
+        </span>
+      </span>
+    </span>
+    <Spinner class="button__spinner" v-if="showSpinner" />
   </component>
 </template>
 
@@ -21,12 +29,17 @@ const props = withDefaults(
     iconName?: string;
     count?: number;
     appearance?: 'nav' | 'submit' | 'cyrcle';
+    showSpinner?: boolean;
+    type?: 'submit' | 'button';
   }>(),
   {
     appearance: 'submit',
+    showSpinner: false,
+    type: 'button',
   }
 );
 
+const typeAttrs = computed(() => (props.to ? null : props.type));
 const component = computed(() =>
   props.to ? resolveComponent('NuxtLink') : 'button'
 );
@@ -46,6 +59,7 @@ const btnClass = ref({
 
 <style scoped lang="scss">
 .button {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
