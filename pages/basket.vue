@@ -1,7 +1,9 @@
 <template>
   <div class="basket-page">
     <section>
-      <Container class="basket-page__inner">basket</Container>
+      <Container class="basket-page__inner">
+        basket
+      </Container>
     </section>
   </div>
 </template>

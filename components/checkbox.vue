@@ -1,13 +1,16 @@
 <template>
   <div class="checkbox">
     <input
+      :id="uniqId"
+      v-model="updatedModelValue"
       class="checkbox__input"
       type="checkbox"
-      :id="uniqId"
       :value="value"
-      v-model="updatedModelValue"
-    />
-    <label class="checkbox__label" :for="uniqId">
+    >
+    <label
+      class="checkbox__label"
+      :for="uniqId"
+    >
       <span class="checkbox__fake-checkbox">&#10004;</span>
       <span class="checkbox__descr">{{ label }}</span>
     </label>
@@ -16,18 +19,18 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: string[];
-  value?: string,
-  label?: string;
-}>();
+  modelValue: string[]
+  value?: string
+  label?: string
+}>()
 const emit = defineEmits<{
-  (e: 'update:modelValue', modelValue: string[]): void;
-}>();
+  (e: 'update:modelValue', modelValue: string[]): void
+}>()
 
 const updatedModelValue = computed({
   get: () => props.modelValue,
-  set: (newValue) => emit('update:modelValue', newValue),
-});
+  set: newValue => emit('update:modelValue', newValue),
+})
 
 const uniqId = useId()
 </script>
@@ -72,7 +75,7 @@ const uniqId = useId()
     @include transition(color, background-color);
   }
   &__descr {
-  
+
   }
 }
 </style>

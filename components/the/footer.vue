@@ -1,6 +1,8 @@
 <template>
   <footer class="footer">
-    <Container class="footer__inner"> FOOTER </Container>
+    <Container class="footer__inner">
+      FOOTER
+    </Container>
   </footer>
 </template>
 

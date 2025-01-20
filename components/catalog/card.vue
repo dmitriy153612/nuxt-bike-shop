@@ -9,7 +9,10 @@
           query: { sizeId: checkedSize },
         }"
       >
-        <div v-if="card.discount" class="card__discount">
+        <div
+          v-if="card.discount"
+          class="card__discount"
+        >
           <IconDiscount class="card__discount-svg" />
           <span class="card__discount-percent">{{ card.discount }}%</span>
         </div>
@@ -24,41 +27,48 @@
       </NuxtLink>
       <div class="card__bottom">
         <Picker
+          v-model="checkedSize"
           class="card__size-picker"
           :sizes="card.sizes"
-          v-model="checkedSize"
         />
-        <p class="card__price-box">
-          <span class="card__price-box-current">{{
-            $formatCurrency(card.price)
-          }}</span>
-          <span class="card__price-box-old" v-if="card?.oldPrice">
-            {{ $formatCurrency(card.oldPrice) }}
-          </span>
-        </p>
-        <Btn class="card__btn" icon-name="basket" @click="addToBasket"> В корзину </Btn>
+        <Price
+          :price="card.price"
+          :old-price="card?.oldPrice"
+        />
+        <Btn
+          class="card__btn"
+          icon-name="basket"
+          :show-spinner="isBtnSpinnerShown"
+          @click="fetchAddToBasket"
+        >
+          В корзину
+        </Btn>
       </div>
     </div>
   </article>
 </template>
 
 <script setup lang="ts">
-import { type ICatalogCard } from '@/types/catalog';
+import type { ICatalogCard } from '@/types/catalog'
 
 const props = defineProps<{
-  card: ICatalogCard;
-}>();
+  card: ICatalogCard
+}>()
 
 const basketStore = useBasketStore()
 
-const checkedSize = ref(props.card.sizes[0]._id);
+const checkedSize = ref(props.card.sizes[0]._id)
 
-function addToBasket() {
-  basketStore.fetchAddProduct({
+const isBtnSpinnerShown = ref(false)
+
+async function fetchAddToBasket() {
+  isBtnSpinnerShown.value = true
+  await basketStore.fetchAddProduct({
     productId: props.card._id,
     sizeId: checkedSize.value,
     amount: 1,
   })
+  isBtnSpinnerShown.value = false
 }
 </script>
 
@@ -121,25 +131,6 @@ function addToBasket() {
   }
   &__size-picker {
     align-self: flex-end;
-  }
-  &__price-box {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    color: $secondary;
-    &-current {
-      position: relative;
-      bottom: -2px;
-      font-size: 18px;
-      font-weight: 700;
-    }
-    &-old {
-      position: relative;
-      top: -2px;
-      font-size: 16px;
-      font-weight: 500;
-      text-decoration: line-through;
-    }
   }
   &__btn {
     justify-self: center;

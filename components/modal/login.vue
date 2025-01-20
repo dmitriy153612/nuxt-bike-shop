@@ -1,29 +1,29 @@
 <template>
   <Dialog
-    @update:visible="() => globalStore.showLoginModal(false)"
-    :visible="globalStore.isLoginModalOpened"
+    :visible="authStore.isLoginModalOpened"
     modal
-    dismissableMask
+    dismissable-mask
     header="Авторизация"
     :style="{ width: '20rem' }"
+    @update:visible="() => authStore.showLoginModal(false)"
   >
     <div class="form">
       <Form
         v-slot="$form"
-        :initialValues
+        :initial-values
         :resolver
-        @submit="onFormSubmit"
         class="form__inner"
+        @submit="onFormSubmit"
       >
         <div class="form__inpus-group">
           <div class="form__item">
             <FloatLabel variant="on">
               <InputText
+                id="login-email"
+                v-model:model-value="initialValues.email"
                 name="email"
                 autocomplete="off"
                 fluid
-                id="login-email"
-                v-model:model-value="initialValues.email"
               />
               <label for="login-email">Email</label>
             </FloatLabel>
@@ -39,12 +39,12 @@
           <div class="form__item">
             <FloatLabel variant="on">
               <Password
-                name="password"
-                :feedback="false"
-                toggleMask
-                fluid
                 id="login-password"
                 v-model="initialValues.password"
+                name="password"
+                :feedback="false"
+                toggle-mask
+                fluid
               />
               <label for="login-password">Пароль</label>
             </FloatLabel>
@@ -58,11 +58,19 @@
             </Message>
           </div>
         </div>
-        <Btn :show-spinner="showBtnSpinner" class="form__btn" type="submit"
-          >Войти</Btn
+        <Btn
+          :show-spinner="showBtnSpinner"
+          class="form__btn"
+          type="submit"
         >
+          Войти
+        </Btn>
       </Form>
-      <button @click="openRegistration" type="button" class="form__outsid-btn">
+      <button
+        type="button"
+        class="form__outsid-btn"
+        @click="openRegistration"
+      >
         Регистрация
       </button>
     </div>
@@ -70,29 +78,24 @@
 </template>
 
 <script setup lang="ts">
-import type { ILogin } from '@/types/auth';
-import { Form, type FormSubmitEvent } from '@primevue/forms';
-import { zodResolver } from '@primevue/forms/resolvers/zod';
-import { z } from 'zod';
-import { useToast } from 'primevue/usetoast';
+import { Form, type FormSubmitEvent } from '@primevue/forms'
+import { zodResolver } from '@primevue/forms/resolvers/zod'
+import { z } from 'zod'
+import { useToast } from 'primevue/usetoast'
+import type { ILogin } from '@/types/auth'
 
-const props = defineProps<{
-  
-}>()
+const authStore = useAuthStore()
+const toast = useToast()
 
-const globalStore = useGlobalStore();
-const authStore = useAuthStore();
-const toast = useToast();
-
-const showBtnSpinner = ref(false);
-const isSubmitBlocked = ref(false);
+const showBtnSpinner = ref(false)
+const isSubmitBlocked = ref(false)
 
 const initialValues = ref<ILogin>({
-  email: 'email@email.com',
-  password: '111111',
-});
+  email: '',
+  password: '',
+})
 
-const formShema = z.object({
+const resolver = zodResolver(z.object({
   email: z
     .string()
     .nonempty({ message: 'Введите Email' })
@@ -101,17 +104,15 @@ const formShema = z.object({
     .string()
     .nonempty({ message: 'Введите пароль' })
     .min(6, { message: 'Не может быть короче 6 символов' }),
-});
-
-const resolver = zodResolver(formShema);
+}))
 
 async function onFormSubmit(e: FormSubmitEvent) {
-  if (!e.valid) return;
+  if (!e.valid) return
 
   if (!isSubmitBlocked.value) {
-    showBtnSpinner.value = true;
-    await authStore.fetchLogin(e.values as ILogin);
-    showBtnSpinner.value = false;
+    showBtnSpinner.value = true
+    await authStore.fetchLogin(e.values as ILogin)
+    showBtnSpinner.value = false
   }
 
   if (!authStore.loginError) {
@@ -119,33 +120,39 @@ async function onFormSubmit(e: FormSubmitEvent) {
       severity: 'success',
       summary: 'Успешная авторизация',
       life: 3000,
-    });
+    })
 
-    globalStore.showLoginModal(false)
-  } else if (authStore.loginError && authStore.loginError.status === 401) {
-    isSubmitBlocked.value = true;
+    authStore.showLoginModal(false)
+
+    initialValues.value = {
+      email: '',
+      password: '',
+    }
+  }
+  else if (authStore.loginError && authStore.loginError.status === 401) {
+    isSubmitBlocked.value = true
     toast.add({
       severity: 'error',
       summary: 'Неверный Email или пароль',
       life: 3000,
-    });
-  } else if (authStore.loginError && authStore.loginError.status === 500) {
-    isSubmitBlocked.value = true;
+    })
+  }
+  else if (authStore.loginError && authStore.loginError.status === 500) {
+    isSubmitBlocked.value = true
     toast.add({
       severity: 'error',
       summary: 'Ошибка сервера',
       life: 3000,
-    });
+    })
   }
 }
 
 function openRegistration() {
-  globalStore.showLoginModal(false);
-  globalStore.showRegistrationModal(true);
+  authStore.showLoginModal(false)
+  authStore.showRegistrationModal(true)
 }
 
 watch(() => initialValues.value, () => isSubmitBlocked.value = false, { deep: true })
-
 </script>
 
 <style scoped lang="scss">
@@ -166,6 +173,7 @@ watch(() => initialValues.value, () => isSubmitBlocked.value = false, { deep: tr
   }
   &__btn {
     max-width: max-content;
+    margin-bottom: 8px;
   }
   &__outsid-btn {
     $padding: 4px;
@@ -207,7 +215,6 @@ watch(() => initialValues.value, () => isSubmitBlocked.value = false, { deep: tr
   }
 }
 </style>
-
 
 {
   "originalEvent": {

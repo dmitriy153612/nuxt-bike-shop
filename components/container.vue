@@ -1,5 +1,8 @@
 <template>
-  <div class="container" :class="containerClass">
+  <div
+    class="container"
+    :class="containerClass"
+  >
     <slot />
   </div>
 </template>
@@ -7,17 +10,17 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    type?: 'header' | 'section';
+    type?: 'header' | 'section'
   }>(),
   {
     type: 'section',
-  }
-);
+  },
+)
 
 const containerClass = ref({
   'container--section': props.type === 'section',
   'container--header': props.type === 'section',
-});
+})
 </script>
 
 <style scoped lang="scss">

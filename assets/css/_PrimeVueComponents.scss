@@ -1,11 +1,11 @@
-@use './variables' as variables;
-@use './mixins' as mixins;
+@use "./variables" as variables;
+@use "./mixins" as mixins;
 
 :root {
   // select
-  --p-select-border-color: #{variables.$secondary};
-  --p-select-focus-border-color: #{variables.$primary};
-  --p-select-option-focus-background: var(--p-gray-200);
+  --p-select-border-color: #{variables.$secondary} !important;
+  --p-select-focus-border-color: #{variables.$primary} !important;
+  --p-select-option-focus-background: var(--p-gray-200) !important;
 
   // input
   --p-inputtext-focus-border-color: #{variables.$primary} !important;
@@ -13,17 +13,20 @@
   --p-floatlabel-focus-color: #{variables.$secondary} !important;
 
   // spinner
-  --p-progressspinner-color-1: #{variables.$primary};
-  --p-progressspinner-color-2: #{variables.$primary};
-  --p-progressspinner-color-3: #{variables.$primary};
-  --p-progressspinner-color-4: #{variables.$primary};
+  --p-progressspinner-color-1: #{variables.$primary} !important;
+  --p-progressspinner-color-2: #{variables.$primary} !important;
+  --p-progressspinner-color-3: #{variables.$primary} !important;
+  --p-progressspinner-color-4: #{variables.$primary} !important;
 
   // drawer
-  --p-drawer-header-padding: 0;
-  --p-drawer-content-padding: 0;
+  --p-drawer-header-padding: 0 !important;
+  --p-drawer-content-padding: 0 !important;
 
   // toast
-  --p-toast-width: min(300px, 96%);
+  --p-toast-width: min(300px, 96%) !important;
+
+  // carousel
+  --p-carousel-indicator-active-background: #{variables.$primary} !important;
 }
 
 // drawer
@@ -60,5 +63,11 @@
   }
 }
 
-
-
+// carousel
+.p-carousel-prev-button,
+.p-carousel-next-button {
+  display: none !important;
+  @media #{variables.$sm-screen} {
+    display: block !important;
+  }
+}

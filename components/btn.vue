@@ -8,53 +8,65 @@
     :type="typeAttrs"
   >
     <span class="button__inner">
-      <span class="button__text" v-if="$slots.default">
+      <span
+        v-if="$slots.default"
+        class="button__text"
+      >
         <slot />
       </span>
-      <span class="button__icon-wrapper" v-if="iconName">
+      <span
+        v-if="iconName"
+        class="button__icon-wrapper"
+      >
         <component :is="icon" />
-        <span class="button__badge" v-if="count !== undefined">
+        <span
+          v-if="count !== undefined"
+          class="button__badge"
+        >
           {{ count }}
         </span>
       </span>
     </span>
-    <Spinner class="button__spinner" v-if="showSpinner" />
+    <Spinner
+      v-if="showSpinner"
+      class="button__spinner"
+    />
   </component>
 </template>
 
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    to?: string;
-    iconName?: string;
-    count?: number;
-    appearance?: 'nav' | 'submit' | 'cyrcle';
-    showSpinner?: boolean;
-    type?: 'submit' | 'button';
+    to?: string
+    iconName?: string
+    count?: number
+    appearance?: 'nav' | 'submit' | 'cyrcle'
+    showSpinner?: boolean
+    type?: 'submit' | 'button'
   }>(),
   {
     appearance: 'submit',
     showSpinner: false,
     type: 'button',
-  }
-);
+  },
+)
 
-const typeAttrs = computed(() => (props.to ? null : props.type));
+const typeAttrs = computed(() => (props.to ? null : props.type))
 const component = computed(() =>
-  props.to ? resolveComponent('NuxtLink') : 'button'
-);
+  props.to ? resolveComponent('NuxtLink') : 'button',
+)
 const icon = computed(() => {
-  if (!props.iconName) return null;
+  if (!props.iconName) return null
   return defineAsyncComponent(
-    () => import(`@/components/icon/${props.iconName}.vue`)
-  );
-});
+    () => import(`@/components/icon/${props.iconName}.vue`),
+  )
+})
 
 const btnClass = ref({
   'button--nav': props.appearance === 'nav',
   'button--submit': props.appearance === 'submit',
   'button--cyrcle': props.appearance === 'cyrcle',
-});
+})
 </script>
 
 <style scoped lang="scss">

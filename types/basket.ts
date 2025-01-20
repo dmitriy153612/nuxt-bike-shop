@@ -1,9 +1,9 @@
-import { type IBrand, type IColor, type ISize } from '@/types/catalog'
+import type { IBrand, IColor, ISize } from '@/types/catalog'
 
 export interface IAddedProductToBasket {
-  productId: string;
-  sizeId: string;
-  amount: number;
+  productId: string
+  sizeId: string
+  amount: number
 }
 
 export interface IBasketConfig {
@@ -14,12 +14,9 @@ export interface IBasketConfig {
   totalPriceDifference: number
 }
 
-export interface IBasketItem {
+export interface IBasketProduct {
   cartItemId: string
   amount: number
-}
-
-export interface IBasketProduct extends IBasketItem {
   brand: IBrand
   color: IColor
   discount: number

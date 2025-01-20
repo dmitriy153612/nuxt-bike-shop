@@ -1,17 +1,21 @@
-import { useAuthStore } from '~/stores/authStore';
+import { useAuthStore } from '~/stores/authStore'
 import type {
   IAddedProductToBasket,
   IBasketProduct,
   IBasketConfig,
-} from '@/types/basket';
-import { BASKET_ADD_URL } from '@/config/api';
+} from '@/types/basket'
+import { BASKET_ADD_URL } from '@/config/api'
 
 export const useBasketStore = defineStore('basketStore', () => {
-  const authStore = useAuthStore();
-  const basketListCookie = useCookie('basket')
-  const basketList = shallowRef<IBasketProduct[]>([]);
-  const config = shallowRef<IBasketConfig | null>(null);
-  const totalAmount = ref<number>(0);
+  const authStore = useAuthStore()
+  const basketList = shallowRef<IBasketProduct[]>([])
+  const config = ref<IBasketConfig>({
+    selectedAmount: 0,
+    totalAmount: 0,
+    totalOldPrice: 0,
+    totalPrice: 0,
+    totalPriceDifference: 0,
+  })
 
   async function fetchAddProduct({
     productId,
@@ -19,53 +23,36 @@ export const useBasketStore = defineStore('basketStore', () => {
     amount,
   }: IAddedProductToBasket) {
     if (!authStore.token) {
-      addProductToBasketCookie({
-        productId,
-        sizeId,
-        amount,
-      });
-      return;
+      authStore.showLoginModal(true)
+      return
     }
     try {
-      const res = await $fetch<{ totalCartAmount: number }>(BASKET_ADD_URL, {
-        method: 'POST',
-        body: { productId, sizeId, amount },
-        headers: {
-          Authorization: `Bearer ${authStore.token}`,
+      const { totalCartAmount } = await $fetch<{ totalCartAmount: number }>(
+        BASKET_ADD_URL,
+        {
+          method: 'POST',
+          body: { productId, sizeId, amount },
+          headers: {
+            Authorization: `Bearer ${authStore.token}`,
+          },
         },
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+      )
 
-  function addProductToBasketCookie(product: IAddedProductToBasket): void {
-    const LSBasket: IAddedProductToBasket[] = getBasketProductFromLS();
-    const index = LSBasket.findIndex(
-      (item) => item.productId === product.productId
-    );
-    if (index === -1) {
-      LSBasket.push(product);
-    } else {
-      LSBasket[index].amount += product.amount;
+      setTotalAmount(totalCartAmount)
     }
-    localStorage.setItem('temporaryBasket', JSON.stringify(LSBasket));
-  
-  }
-
-  function getBasketProductFromLS(): IAddedProductToBasket[] {
-    const basket = localStorage.getItem('temporaryBasket')
-    if (!basket) return [];
-    return JSON.parse(basket);
+    catch (err) {
+      console.error(err)
+    }
   }
 
   function setTotalAmount(amount: number) {
-    totalAmount.value = amount;
+    config.value.totalAmount = amount
   }
 
   return {
-    totalAmount,
     setTotalAmount,
     fetchAddProduct,
-  };
-});
+    config,
+    basketList,
+  }
+})

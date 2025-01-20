@@ -1,13 +1,19 @@
 <template>
-<FloatLabel variant="on">
-    <InputNumber v-model="updatedModelValue" :min="0" :fluid="true" suffix=" ₽" :inputId="uniqId" />
+  <FloatLabel variant="on">
+    <InputNumber
+      v-model="updatedModelValue"
+      :min="0"
+      :fluid="true"
+      suffix=" ₽"
+      :input-id="uniqId"
+    />
     <label :for="uniqId">{{ label }}</label>
-</FloatLabel>
+  </FloatLabel>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: number | undefined,
+  modelValue: number | undefined
   label: string
 }>()
 
@@ -23,9 +29,8 @@ const updatedModelValue = computed({
       updatedValue = newValue
     }
     emit('update:modelValue', updatedValue)
-  }
+  },
 })
 
 const uniqId = useId()
-
 </script>

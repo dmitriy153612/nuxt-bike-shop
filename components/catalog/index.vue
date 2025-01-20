@@ -1,19 +1,22 @@
 <template>
   <div class="catalog">
     <ul class="catalog__list">
-    <li class="catalog__item" v-for="card in catalog" :key="card._id">
-      <CatalogCard :card="card" />
-    </li>
-  </ul>
+      <li
+        v-for="card in catalog"
+        :key="card._id"
+        class="catalog__item"
+      >
+        <CatalogCard :card="card" />
+      </li>
+    </ul>
   </div>
-
 </template>
 
 <script setup lang="ts">
-import type { ICatalogCard } from '~/types/catalog';
+import type { ICatalogCard } from '~/types/catalog'
 
 defineProps<{
-  catalog: ICatalogCard[],
+  catalog: ICatalogCard[]
 }>()
 </script>
 

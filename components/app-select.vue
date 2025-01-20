@@ -1,21 +1,21 @@
 <template>
-    <Select
-    class="select"
+  <Select
     v-model="updatedModelValue"
+    class="select"
     :options="options"
-    optionLabel="label"
+    option-label="label"
     checkmark
-    :highlightOnSelect="false"
+    :highlight-on-select="false"
   />
 </template>
 
 <script setup lang="ts">
-import type { ISelect } from '@/types/select';
+import type { ISelect } from '@/types/select'
 
 const props = defineProps<{
-  modelValue: ISelect,
-  options: ISelect[],
-}>();
+  modelValue: ISelect
+  options: ISelect[]
+}>()
 
 const emit = defineEmits<{
   (e: 'update:modelValue', modelValue: ISelect): void
@@ -23,7 +23,7 @@ const emit = defineEmits<{
 
 const updatedModelValue = computed({
   get: () => props.modelValue,
-  set: (newValue) => emit('update:modelValue', newValue)
+  set: newValue => emit('update:modelValue', newValue),
 })
 </script>
 

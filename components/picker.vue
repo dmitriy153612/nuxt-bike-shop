@@ -1,16 +1,25 @@
 <template>
   <div class="size-picker">
-    <h4 class="size-picker__title">Доступные размеры:</h4>
+    <h4 class="size-picker__title">
+      Доступные размеры:
+    </h4>
     <ul class="size-picker__list">
-      <li v-for="(size, index) in sizes" :key="uniqIds[index]" class="size-picker__item">
+      <li
+        v-for="(size, index) in sizes"
+        :key="uniqIds[index]"
+        class="size-picker__item"
+      >
         <input
           :id="uniqIds[index]"
           v-model="updatedModelValue"
           type="radio"
           class="size-picker__input"
           :value="size._id"
-        />
-        <label class="size-picker__label" :for="uniqIds[index]">
+        >
+        <label
+          class="size-picker__label"
+          :for="uniqIds[index]"
+        >
           <span class="size-picker__descr">{{ size.name }}</span>
         </label>
       </li>
@@ -19,23 +28,23 @@
 </template>
 
 <script lang="ts" setup>
-import { type ISize } from '@/types/catalog';
+import type { ISize } from '@/types/catalog'
 
 const props = defineProps<{
-  modelValue: string;
-  sizes: ISize[];
-}>();
+  modelValue: string
+  sizes: ISize[]
+}>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', modelValue: string): void;
-}>();
+  (e: 'update:modelValue', modelValue: string): void
+}>()
 
-const uniqIds = Array.from({ length: props.sizes.length }, () => useId());
+const uniqIds = Array.from({ length: props.sizes.length }, () => useId())
 
 const updatedModelValue = computed({
   get: () => props.modelValue,
-  set: (newValue) => emit('update:modelValue', newValue),
-});
+  set: newValue => emit('update:modelValue', newValue),
+})
 </script>
 
 <style lang="scss" scoped>

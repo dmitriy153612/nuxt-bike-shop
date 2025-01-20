@@ -1,7 +1,12 @@
 <template>
   <div class="filter">
-    <form class="filter__form" @submit.prevent>
-      <h3 class="filter__title">Фильтр</h3>
+    <form
+      class="filter__form"
+      @submit.prevent
+    >
+      <h3 class="filter__title">
+        Фильтр
+      </h3>
       <CatalogFilterFieldset
         v-model="filter.brandId"
         :properties="filterStore.brands"
@@ -18,38 +23,54 @@
         legend="Размер"
       />
       <div class="filter__inputs">
-        <CatalogFilterInput v-model="filter.minPrice" label="Цена от" />
-        <CatalogFilterInput v-model="filter.maxPrice" label="Цена до" />
+        <CatalogFilterInput
+          v-model="filter.minPrice"
+          label="Цена от"
+        />
+        <CatalogFilterInput
+          v-model="filter.maxPrice"
+          label="Цена до"
+        />
       </div>
       <div class="filter__buttons">
-        <Btn class="filter__btn" @click.prevent="setFilterToRouter" type="submit" >Применить</Btn
+        <Btn
+          class="filter__btn"
+          type="submit"
+          @click.prevent="setFilterToRouter"
         >
-        <Btn class="filter__btn" @click.prevent="resetFilter">Сбросить</Btn>
+          Применить
+        </Btn>
+        <Btn
+          class="filter__btn"
+          @click.prevent="resetFilter"
+        >
+          Сбросить
+        </Btn>
       </div>
     </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { IFilter } from '@/types/catalog';
+import type { IFilter } from '@/types/catalog'
 
-const filterStore = useFilterStore();
-const globalStore = useGlobalStore();
-const router = useRouter();
-const route = useRoute();
+const filterStore = useFilterStore()
+const catalogStore = useCatalogStore()
+const router = useRouter()
+const route = useRoute()
 const filter = ref<IFilter>({
   brandId: getArrayFromRoute('brandId'),
   colorId: getArrayFromRoute('colorId'),
   sizeId: getArrayFromRoute('sizeId'),
   minPrice: Number(route.query['minPrice']) || undefined,
   maxPrice: Number(route.query['maxPrice']) || undefined,
-});
+})
 
 function setFilterToRouter() {
   router.replace({
     query: { ...route.query, ...filter.value, ...{ page: 1 } },
-  });
-  globalStore.openFilter(false);
+  })
+  catalogStore.openFilter(false)
 }
 
 function resetFilter() {
@@ -65,23 +86,23 @@ function resetFilter() {
       },
       ...{ page: 1 },
     },
-  });
-  filter.value.brandId = [];
-  filter.value.colorId = [];
-  filter.value.sizeId = [];
-  filter.value.minPrice = undefined;
-  filter.value.maxPrice = undefined;
+  })
+  filter.value.brandId = []
+  filter.value.colorId = []
+  filter.value.sizeId = []
+  filter.value.minPrice = undefined
+  filter.value.maxPrice = undefined
 }
 
 function getArrayFromRoute(properyName: string): string[] {
   if (Object.prototype.hasOwnProperty.call(route.query, properyName)) {
-    const value = route.query[properyName];
+    const value = route.query[properyName]
     if (Array.isArray(value)) {
-      return value.map((item) => String(item));
+      return value.map(item => String(item))
     }
-    return [String(value)];
+    return [String(value)]
   }
-  return [];
+  return []
 }
 </script>
 

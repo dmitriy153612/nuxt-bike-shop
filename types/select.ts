@@ -1,4 +1,4 @@
 export interface ISelect {
-  label: string;
-  id: string;
+  label: string
+  id: string
 }

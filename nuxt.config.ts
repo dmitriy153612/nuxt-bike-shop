@@ -1,11 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import Aura from '@primevue/themes/aura';
-import { definePreset } from '@primevue/themes';
-const MyPreset = definePreset(Aura, {});
+import Aura from '@primevue/themes/aura'
+import { definePreset } from '@primevue/themes'
+
+const MyPreset = definePreset(Aura, {
+
+})
 export default defineNuxtConfig({
-  compatibilityDate: '2025-01-14',
-  devtools: { enabled: true },
+  modules: ['@primevue/nuxt-module', '@vueuse/nuxt', '@pinia/nuxt', '@nuxt/image', '@nuxt/eslint'],
   ssr: true,
+  devtools: { enabled: false },
   app: {
     baseURL: '/',
     head: {
@@ -17,7 +20,7 @@ export default defineNuxtConfig({
         {
           name: 'description',
           content: 'Интернет магазин велосипедов Bike-Shop',
-        }
+        },
       ],
       title: 'Bike-Shop',
       htmlAttrs: {
@@ -25,20 +28,16 @@ export default defineNuxtConfig({
       },
     },
   },
+  css: ['normalize.css', '@/assets/css/main.scss'],
+  build: {
+    analyze: false,
+  },
   routeRules: {
     '/': {
       redirect: '/catalog',
     },
   },
-  modules: [
-    '@primevue/nuxt-module',
-    '@vueuse/nuxt',
-    '@nuxt/fonts',
-    '@pinia/nuxt',
-    '@nuxt/image',
-    '@nuxtjs/html-validator',
-  ],
-  css: ['normalize.css', '@/assets/css/main.scss'],
+  compatibilityDate: '2025-01-14',
   vite: {
     css: {
       preprocessorOptions: {
@@ -51,8 +50,10 @@ export default defineNuxtConfig({
       },
     },
   },
-  build: {
-    analyze: false,
+  eslint: {
+    config: {
+      stylistic: true,
+    },
   },
   primevue: {
     options: {
@@ -73,7 +74,8 @@ export default defineNuxtConfig({
         'Toast',
         'Message',
         'Password',
+        'Carousel',
       ],
     },
   },
-});
+})

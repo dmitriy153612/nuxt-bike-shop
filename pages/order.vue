@@ -1,9 +1,7 @@
 <template>
   <div class="order-page">
     <section>
-      <Container class="order-page__inner">
-
-      </Container>
+      <Container class="order-page__inner" />
     </section>
   </div>
 </template>

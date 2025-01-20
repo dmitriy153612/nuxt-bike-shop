@@ -2,7 +2,7 @@
   <div class="pagination">
     <div class="pagination__inner">
       <button
-      type="button"
+        type="button"
         :disabled="modelValue === 1"
         class="pagination__btn pagination__btn--change"
         @click="previousPage"
@@ -10,20 +10,24 @@
         &#9668;
       </button>
       <ul class="pagination__list">
-        <li class="pagination__item" v-for="page in totalPages" :key="page">
+        <li
+          v-for="page in totalPages"
+          :key="page"
+          class="pagination__item"
+        >
           <button
             type="button"
             class="pagination__btn pagination__btn--num"
             :class="{ 'pagination__btn--checked': page === modelValue }"
-            @click="() => emitPage(page)"
             :aria-label="`перйти на страницу ${page}`"
+            @click="() => emitPage(page)"
           >
             {{ page }}
           </button>
         </li>
       </ul>
       <button
-      type="button"
+        type="button"
         :disabled="modelValue === totalPages"
         class="pagination__btn pagination__btn--change"
         @click="nextPage"
@@ -36,30 +40,30 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  modelValue: number;
-  totalPages: number;
-}>();
+  modelValue: number
+  totalPages: number
+}>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', modelValue: number): void;
-}>();
+  (e: 'update:modelValue', modelValue: number): void
+}>()
 
 function nextPage() {
   if (props.modelValue + 1 > props.totalPages) {
-    return;
+    return
   }
-  emitPage(props.modelValue + 1);
+  emitPage(props.modelValue + 1)
 }
 
 function previousPage() {
   if (props.modelValue - 1 < 1) {
-    return;
+    return
   }
-  emitPage(props.modelValue - 1);
+  emitPage(props.modelValue - 1)
 }
 
 function emitPage(newPage: number) {
-  emit('update:modelValue', newPage);
+  emit('update:modelValue', newPage)
 }
 </script>
 

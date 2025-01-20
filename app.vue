@@ -5,17 +5,18 @@
 
   <teleport to="body">
     <Transition>
-      <Spinner type="page" v-if="globalStore.isPageSpinnerShown" />
+      <Spinner
+        v-if="globalStore.isPageSpinnerShown"
+        type="page"
+      />
     </Transition>
 
-    <ModalLogin />
-    <ModalRegistration />
-    <Toast position="top-center"/>
+    <Toast position="top-center" />
   </teleport>
 </template>
 
 <script setup lang="ts">
-const globalStore = useGlobalStore();
+const globalStore = useGlobalStore()
 </script>
 
 <style lang="scss" scoped>

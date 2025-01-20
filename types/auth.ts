@@ -17,8 +17,8 @@ export interface IUser {
 }
 
 export interface IAuthError {
-  status: number,
-  data: string,
+  status: number
+  data: string
 }
 
 export function isIAuthError(err: unknown): err is IAuthError {

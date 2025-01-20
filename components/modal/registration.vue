@@ -1,29 +1,30 @@
 <template>
   <Dialog
-    @update:visible="globalStore.showRegistrationModal(false)"
-    :visible="globalStore.isRegistrationModalOpened"
+    :visible="authStore.isRegistrationModalOpened"
     modal
-    dismissableMask
+    dismissable-mask
     header="Регистрация"
     :style="{ width: '20rem' }"
+    @update:visible="authStore.showRegistrationModal(false)"
   >
     <div class="form">
       <Form
         v-slot="$form"
-        :initialValues
+        :initial-values
         :resolver
-        @submit="onFormSubmit"
         class="form__inner"
+        @submit="onFormSubmit"
       >
         <div class="form__inpus-group">
           <div class="form__item">
             <FloatLabel variant="on">
               <InputText
+                id="login-email"
+                v-model:model-value="initialValues.email"
                 name="email"
                 class=""
                 autocomplete="off"
                 fluid
-                id="login-email"
               />
               <label for="login-email">Email</label>
             </FloatLabel>
@@ -40,11 +41,12 @@
           <div class="form__item">
             <FloatLabel variant="on">
               <Password
+                id="login-password"
+                v-model:model-value="initialValues.password"
                 name="password"
                 :feedback="false"
-                toggleMask
+                toggle-mask
                 fluid
-                id="login-password"
               />
               <label for="login-password">Пароль</label>
             </FloatLabel>
@@ -61,11 +63,12 @@
           <div class="form__item">
             <FloatLabel variant="on">
               <Password
+                id="login-password-cinfirm"
+                v-model:model-value="initialValues.passwordConfirm"
                 name="passwordConfirm"
                 :feedback="false"
-                toggleMask
+                toggle-mask
                 fluid
-                id="login-password-cinfirm"
               />
               <label for="login-password-cinfirm">Подтвердите пароль</label>
             </FloatLabel>
@@ -81,34 +84,51 @@
           </div>
         </div>
 
-        <Btn class="form__btn" type="submit">Регистрация</Btn>
+        <Btn
+          :show-spinner="showBtnSpinner"
+          class="form__btn"
+          type="submit"
+        >
+          Зарегестрироваться
+        </Btn>
       </Form>
-      <button @click="openLogin" type="button" class="form__outsid-btn">Авторизация</button>
+      <button
+        type="button"
+        class="form__outsid-btn"
+        @click="openLogin"
+      >
+        Авторизация
+      </button>
     </div>
   </Dialog>
 </template>
 
 <script setup lang="ts">
-import type { IRegistration } from '@/types/auth';
-import { Form, type FormSubmitEvent } from '@primevue/forms';
-import { zodResolver } from '@primevue/forms/resolvers/zod';
-import { z } from 'zod';
-import { useToast } from 'primevue/usetoast';
-const globalStore = useGlobalStore();
-const authStore = useAuthStore();
-const toast = useToast();
+import { Form, type FormSubmitEvent } from '@primevue/forms'
+import { zodResolver } from '@primevue/forms/resolvers/zod'
+import { z } from 'zod'
+import { useToast } from 'primevue/usetoast'
+import type { IRegistration } from '@/types/auth'
+
+const authStore = useAuthStore()
+const toast = useToast()
+
+const showBtnSpinner = ref(false)
+const isSubmitBlocked = ref(false)
 
 const initialValues = ref<IRegistration>({
-  email: 'email@email.com',
-  password: '111111',
+  email: '',
+  password: '',
   passwordConfirm: '',
-});
+})
 
 const resolver = zodResolver(
   z
     .object({
-      email: z.string().min(1, { message: 'Введите Email' })
-      .email({ message: 'Некорректный Email' }),
+      email: z
+        .string()
+        .min(1, { message: 'Введите Email' })
+        .email({ message: 'Некорректный Email' }),
       password: z
         .string()
         .min(1, { message: 'Введите пароль' })
@@ -121,30 +141,65 @@ const resolver = zodResolver(
           code: 'custom',
           message: 'Пароли должны совпадать',
           path: ['passwordConfirm'],
-        });
+        })
       }
-    })
-);
+    }),
+)
 
 async function onFormSubmit(e: FormSubmitEvent) {
+  if (!e.valid) return
 
-  if (!e.valid) return;
-  await authStore.fetchRegistration(e.values as IRegistration);
-  globalStore.showRegistrationModal(false);
+  if (!isSubmitBlocked.value) {
+    showBtnSpinner.value = true
+    await authStore.fetchRegistration(e.values as IRegistration)
+    showBtnSpinner.value = false
+  }
 
-  if (e.valid) {
+  if (!authStore.registrationError) {
     toast.add({
       severity: 'success',
       summary: 'Успешная регистрация',
       life: 3000,
-    });
+    })
+    openLogin()
+
+    initialValues.value = {
+      email: '',
+      password: '',
+      passwordConfirm: '',
+    }
+  }
+  else if (
+    authStore.registrationError
+    && authStore.registrationError.status === 409
+  ) {
+    isSubmitBlocked.value = true
+    toast.add({
+      severity: 'error',
+      summary: 'Пользователь уже существует',
+      life: 3000,
+    })
+  }
+  else if (authStore.loginError && authStore.loginError.status === 500) {
+    isSubmitBlocked.value = true
+    toast.add({
+      severity: 'error',
+      summary: 'Ошибка сервера',
+      life: 3000,
+    })
   }
 }
 
 function openLogin() {
-  globalStore.showRegistrationModal(false);
-  globalStore.showLoginModal(true);
+  authStore.showRegistrationModal(false)
+  authStore.showLoginModal(true)
 }
+
+watch(
+  () => initialValues.value,
+  () => (isSubmitBlocked.value = false),
+  { deep: true },
+)
 </script>
 
 <style scoped lang="scss">
@@ -165,6 +220,7 @@ function openLogin() {
   }
   &__btn {
     max-width: max-content;
+    margin-bottom: 8px;
   }
   &__outsid-btn {
     $padding: 4px;

@@ -1,5 +1,8 @@
 <template>
-  <Pagination v-model="page" :totalPages="catalogStore.config?.totalPages || 0" />
+  <Pagination
+    v-model="page"
+    :total-pages="catalogStore.config?.totalPages || 0"
+  />
 </template>
 
 <script setup lang="ts">
@@ -10,7 +13,7 @@ const catalogStore = useCatalogStore()
 const page = ref<number>(Number(route.query['page']) || 1)
 
 function setPageToQuery(page: number) {
-  router.push({ query: { ...route.query, page: page }})
+  router.push({ query: { ...route.query, page: page } })
 }
 
 watch(() => page.value, () => setPageToQuery(page.value), { immediate: true })

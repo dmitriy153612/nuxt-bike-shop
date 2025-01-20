@@ -1,7 +1,10 @@
 <template>
-  <div class="overlay" :class="config.class">
+  <div
+    class="overlay"
+    :class="config.class"
+  >
     <ProgressSpinner
-      :strokeWidth="config.strokeWidth"
+      :stroke-width="config.strokeWidth"
       :style="config.style"
       class="overlay__spinner"
     />
@@ -11,12 +14,12 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    type?: 'page' | 'btn';
+    type?: 'page' | 'btn'
   }>(),
   {
     type: 'btn',
-  }
-);
+  },
+)
 
 const config = computed(() => {
   if (props.type === 'page') {
@@ -24,14 +27,14 @@ const config = computed(() => {
       strokeWidth: '6',
       class: 'overlay--page',
       style: { height: '100px', width: '100px' },
-    };
+    }
   }
   return {
     strokeWidth: '4',
     class: 'overlay--btn',
     style: { height: '1.5em', width: '1.5em' },
-  };
-});
+  }
+})
 </script>
 
 <style scoped lang="scss">

@@ -1,21 +1,31 @@
 <template>
-<fieldset class="fieldset">
-  <legend class="fieldset__legend">{{ legend }}</legend>
-  <ul class="fieldset__list">
-    <li class="fieldset__item" v-for="prop in properties" :key="prop._id">
-      <Checkbox v-model="updatedModelValue" :value="prop._id" :label="prop.name" />
-    </li>
-  </ul>
-</fieldset>
+  <fieldset class="fieldset">
+    <legend class="fieldset__legend">
+      {{ legend }}
+    </legend>
+    <ul class="fieldset__list">
+      <li
+        v-for="prop in properties"
+        :key="prop._id"
+        class="fieldset__item"
+      >
+        <Checkbox
+          v-model="updatedModelValue"
+          :value="prop._id"
+          :label="prop.name"
+        />
+      </li>
+    </ul>
+  </fieldset>
 </template>
 
 <script setup lang="ts">
-import type { ISize } from '~/types/catalog';
+import type { ISize } from '~/types/catalog'
 
 const props = defineProps<{
-  modelValue: string[],
-  legend: string,
-  properties: ISize[],
+  modelValue: string[]
+  legend: string
+  properties: ISize[]
 }>()
 
 const emit = defineEmits<{
@@ -24,7 +34,7 @@ const emit = defineEmits<{
 
 const updatedModelValue = computed({
   get: () => props.modelValue,
-  set: (newValue) => emit('update:modelValue', newValue)
+  set: newValue => emit('update:modelValue', newValue),
 })
 </script>
 

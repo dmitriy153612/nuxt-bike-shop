@@ -1,6 +1,13 @@
 <template>
-  <NuxtLink to="/" class="logo">
-    <img src="@/assets/img/logo.png" alt="bike-shop" class="logo__img" />
+  <NuxtLink
+    to="/"
+    class="logo"
+  >
+    <img
+      src="@/assets/img/logo.png"
+      alt="bike-shop"
+      class="logo__img"
+    >
   </NuxtLink>
 </template>
 

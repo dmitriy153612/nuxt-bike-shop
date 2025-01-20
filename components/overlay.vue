@@ -1,5 +1,9 @@
 <template>
-  <div class="overlay" :class="overlayClass" @mousedown.self="emitClose">
+  <div
+    class="overlay"
+    :class="overlayClass"
+    @mousedown.self="emitClose"
+  >
     <slot />
   </div>
 </template>
@@ -8,19 +12,19 @@
 const props = withDefaults(defineProps<{
   contentPosition?: 'center' | 'left'
 }>(), {
-  contentPosition: 'center'
+  contentPosition: 'center',
 })
 const emit = defineEmits<{
-  (e: 'close'): void;
-}>();
+  (e: 'close'): void
+}>()
 
 function emitClose() {
-  emit('close');
+  emit('close')
 }
 
 const overlayClass = ref({
   'overlay--center': props.contentPosition === 'center',
-  'overlay--left': props.contentPosition === 'left'
+  'overlay--left': props.contentPosition === 'left',
 })
 </script>
 

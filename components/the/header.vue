@@ -1,58 +1,70 @@
 <template>
   <header class="header">
-    <Container class="header__inner" type="header">
+    <Container
+      class="header__inner"
+      type="header"
+    >
       <Btn
-        @click="() => globalStore.openFilter()"
         icon-name="filter"
         appearance="nav"
         class="header__filter"
         aria-label="Показать фильтр товаров"
+        @click="() => catalogStore.openFilter()"
       />
-       <h1 class="header__title">Bike-Shop</h1>
+      <h1 class="header__title">
+        Bike-Shop
+      </h1>
       <Logo />
       <nav>
         <ul class="header__list">
           <li class="header__item">
             <Btn
-              @click="() => globalStore.showLoginModal(true)"
+              v-if="!authStore.token"
               icon-name="login"
               appearance="nav"
-              v-if="!authStore.token"
+              @click="() => authStore.showLoginModal(true)"
             >
               <span class="header__btn-text">Войти</span>
             </Btn>
             <Btn
-              @click="authStore.logout"
+              v-else
               icon-name="logout"
               appearance="nav"
-              v-else
+              @click="isLoguoutModalOpened = true"
             >
               <span class="header__btn-text">Выйти</span>
             </Btn>
           </li>
           <li class="header__item">
-
-              <Btn
+            <Btn
               icon-name="basket"
               appearance="nav"
               to="/basket"
-              :count="basketStore.totalAmount"
+              :count="basketStore.config.totalAmount"
             >
               <span class="header__btn-text">Корзина</span>
             </Btn>
           </li>
         </ul>
-      </nav> 
-    </Container> 
+      </nav>
+      <ModalConfirm
+        v-model:model-value="isLoguoutModalOpened"
+        title="Выйти из аккаунта?"
+        btn-resolve-name="Выйти"
+        :resolve-function="authStore.logout"
+      />
+      <ModalLogin />
+      <ModalRegistration />
+    </Container>
   </header>
 </template>
 
 <script setup lang="ts">
-const globalStore = useGlobalStore();
-const authStore = useAuthStore();
-const basketStore = useBasketStore();
+const authStore = useAuthStore()
+const basketStore = useBasketStore()
+const catalogStore = useCatalogStore()
 
-authStore.fetchCheckAuth()
+const isLoguoutModalOpened = ref(false)
 </script>
 
 <style scoped lang="scss">

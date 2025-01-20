@@ -3,12 +3,13 @@
     <main class="catalog-page__main">
       <section class="catalog-page__sec">
         <Container class="catalog-page__inner">
-          {{ 123 }}
-          <PageTitle class="catalog-page__title">Mountain bikes</PageTitle>
+          <PageTitle class="catalog-page__title">
+            Mountain bikes
+          </PageTitle>
           <AppSelect
-          class="catalog-page__select"
-            :options="SORTING_OPTIONS"
             v-model="sorting"
+            class="catalog-page__select"
+            :options="SORTING_OPTIONS"
           />
 
           <Catalog
@@ -17,16 +18,16 @@
           />
 
           <CatalogPagination
-            class="catalog-page__pagination"
             v-if="catalogStore.catalog.length"
-          /> 
-          <CatalogFilter class="catalog-page__filter" /> 
+            class="catalog-page__pagination"
+          />
+          <CatalogFilter class="catalog-page__filter" />
 
           <Drawer
-            :blockScroll="true"
-            :visible="globalStore.isFilterOpened"
-            @update:visible="() => globalStore.openFilter(false)"
+            :block-scroll="true"
+            :visible="catalogStore.isFilterOpened"
             class="catalog-page__drawer"
+            @update:visible="() => catalogStore.openFilter(false)"
           >
             <CatalogFilter />
           </Drawer>
@@ -37,65 +38,60 @@
 </template>
 
 <script setup lang="ts">
-import { SORTING_OPTIONS } from '@/config/catalogVariables';
-import type { ISelect } from '@/types/select';
+import { SORTING_OPTIONS } from '@/config/catalogVariables'
+import type { ISelect } from '@/types/select'
 
 definePageMeta({
   title: 'Каталог',
-});
-
-const globalStore = useGlobalStore();
-
-definePageMeta({
   middleware: 'catalog',
-});
+})
 
-const catalogStore = useCatalogStore();
-const route = useRoute();
-const router = useRouter();
+const catalogStore = useCatalogStore()
+const route = useRoute()
+const router = useRouter()
 
-const sorting = ref(SORTING_OPTIONS[0]);
+const sorting = ref(SORTING_OPTIONS[0])
 
 function getSortingObj(): ISelect | null {
   if (route.query?.sorting) {
     const index = SORTING_OPTIONS.findIndex(
-      (option) => option.id === route.query.sorting
-    );
-    return SORTING_OPTIONS[index];
+      option => option.id === route.query.sorting,
+    )
+    return SORTING_OPTIONS[index]
   }
-  return null;
+  return null
 }
 
 function getSortingQueryObj(sortingId: string) {
   const isIdExistOnOptions = SORTING_OPTIONS.some(
-    (item) => item.id === sortingId
-  );
+    item => item.id === sortingId,
+  )
 
   if (!isIdExistOnOptions || sortingId === SORTING_OPTIONS[0].id) {
-    return { sorting: undefined };
+    return { sorting: undefined }
   }
 
-  return { sorting: sortingId };
+  return { sorting: sortingId }
 }
 
 function setSortingToRoute(sortingId: string) {
-  const sortingQueryObj = getSortingQueryObj(sortingId);
+  const sortingQueryObj = getSortingQueryObj(sortingId)
   router.replace({
     query: { ...route.query, ...sortingQueryObj },
-  });
+  })
 }
 
 onMounted(() => {
-  const newSorting = getSortingObj();
+  const newSorting = getSortingObj()
   if (newSorting) {
-    sorting.value = newSorting;
+    sorting.value = newSorting
   }
-});
+})
 
 watch(
   () => sorting.value.id,
-  () => setSortingToRoute(sorting.value.id)
-);
+  () => setSortingToRoute(sorting.value.id),
+)
 </script>
 
 <style scoped lang="scss">
@@ -114,7 +110,6 @@ watch(
       'select'
       'catalog'
       'pagination';
-
 
     @media #{$md-screen} {
       grid-template-rows: auto 1fr auto;
