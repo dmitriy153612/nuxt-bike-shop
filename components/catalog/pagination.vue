@@ -6,15 +6,22 @@
 </template>
 
 <script setup lang="ts">
+const catalogStore = useCatalogStore()
 const route = useRoute()
 const router = useRouter()
-const catalogStore = useCatalogStore()
 
-const page = ref<number>(Number(route.query['page']) || 1)
+const page = ref<number>(1)
 
 function setPageToQuery(page: number) {
   router.push({ query: { ...route.query, page: page } })
 }
 
+function setPageFromQuery(newPage: number) {
+  page.value = newPage || 1
+}
+
 watch(() => page.value, () => setPageToQuery(page.value), { immediate: true })
+watch(() => route.query['page'], (newValue) => {
+  setPageFromQuery(Number(newValue))
+}, { immediate: true })
 </script>

@@ -58,10 +58,11 @@ const filterStore = useFilterStore()
 const catalogStore = useCatalogStore()
 const router = useRouter()
 const route = useRoute()
+
 const filter = ref<IFilter>({
+  sizeId: getArrayFromRoute('sizeId'),
   brandId: getArrayFromRoute('brandId'),
   colorId: getArrayFromRoute('colorId'),
-  sizeId: getArrayFromRoute('sizeId'),
   minPrice: Number(route.query['minPrice']) || undefined,
   maxPrice: Number(route.query['maxPrice']) || undefined,
 })
@@ -74,6 +75,12 @@ function setFilterToRouter() {
 }
 
 function resetFilter() {
+  filter.value.brandId = []
+  filter.value.colorId = []
+  filter.value.sizeId = []
+  filter.value.minPrice = undefined
+  filter.value.maxPrice = undefined
+
   router.replace({
     query: {
       ...route.query,
@@ -87,15 +94,10 @@ function resetFilter() {
       ...{ page: 1 },
     },
   })
-  filter.value.brandId = []
-  filter.value.colorId = []
-  filter.value.sizeId = []
-  filter.value.minPrice = undefined
-  filter.value.maxPrice = undefined
 }
 
 function getArrayFromRoute(properyName: string): string[] {
-  if (Object.prototype.hasOwnProperty.call(route.query, properyName)) {
+  if (properyName in route.query) {
     const value = route.query[properyName]
     if (Array.isArray(value)) {
       return value.map(item => String(item))

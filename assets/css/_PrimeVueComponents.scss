@@ -46,7 +46,7 @@
   @include mixins.transition(border-color);
 }
 
-// dialog
+dialog
 .p-dialog-header {
   padding-top: 16px;
   padding-bottom: 0;
@@ -60,14 +60,5 @@
   &:focus-visible {
     border-color: variables.$primary !important;
     border-width: 2px !important;
-  }
-}
-
-// carousel
-.p-carousel-prev-button,
-.p-carousel-next-button {
-  display: none !important;
-  @media #{variables.$sm-screen} {
-    display: block !important;
   }
 }

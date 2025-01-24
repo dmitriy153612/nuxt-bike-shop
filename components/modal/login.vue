@@ -215,38 +215,3 @@ watch(() => initialValues.value, () => isSubmitBlocked.value = false, { deep: tr
   }
 }
 </style>
-
-{
-  "originalEvent": {
-      "isTrusted": true,
-      "_vts": 1736979373752
-  },
-  "valid": true,
-  "states": {
-      "email": {
-          "value": "email@email.com",
-          "touched": false,
-          "dirty": false,
-          "pristine": true,
-          "valid": true,
-          "invalid": false,
-          "error": null,
-          "errors": []
-      },
-      "password": {
-          "value": "111111sdf",
-          "touched": true,
-          "dirty": true,
-          "pristine": false,
-          "valid": true,
-          "invalid": false,
-          "error": null,
-          "errors": []
-      }
-  },
-  "values": {
-      "email": "email@email.com",
-      "password": "111111sdf"
-  },
-  "errors": {}
-}

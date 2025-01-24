@@ -6,9 +6,9 @@ const MyPreset = definePreset(Aura, {
 
 })
 export default defineNuxtConfig({
-  modules: ['@primevue/nuxt-module', '@vueuse/nuxt', '@pinia/nuxt', '@nuxt/image', '@nuxt/eslint'],
+  modules: ['@primevue/nuxt-module', '@pinia/nuxt', '@nuxt/image', '@nuxt/eslint'],
   ssr: true,
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   app: {
     baseURL: '/',
     head: {
@@ -34,10 +34,10 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/': {
-      redirect: '/catalog',
+      redirect: '/catalog?page=1',
     },
   },
-  compatibilityDate: '2025-01-14',
+  compatibilityDate: '2025-01-23',
   vite: {
     css: {
       preprocessorOptions: {

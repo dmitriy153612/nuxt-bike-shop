@@ -21,11 +21,13 @@
         class="form__price-box-price"
       />
     </p>
-    <Picker
-      v-model="checkedSizeId"
-      class="form__size-picker"
-      :sizes="sizes"
-    />
+    <div class="form__size-picker-wrapper">
+      <Picker
+        v-model="checkedSizeId"
+        :sizes="sizes"
+      />
+    </div>
+
     <Btn
       type="submit"
       class="form__submit"
@@ -86,7 +88,7 @@ async function addToBasket() {
     font-size: 18px;
     font-weight: 600;
   }
-  &__size-picker {
+  &__size-picker-wrapper {
     padding-top: 8px;
     padding-bottom: 16px;
   }

@@ -1,16 +1,17 @@
 <template>
   <header class="header">
     <Container
+      type="box"
       class="header__inner"
-      type="header"
     >
-      <Btn
-        icon-name="filter"
-        appearance="nav"
-        class="header__filter"
-        aria-label="Показать фильтр товаров"
-        @click="() => catalogStore.openFilter()"
-      />
+      <div class="header__btn-filter">
+        <Btn
+          icon-name="filter"
+          appearance="nav"
+          aria-label="Показать фильтр товаров"
+          @click="() => catalogStore.openFilter()"
+        />
+      </div>
       <h1 class="header__title">
         Bike-Shop
       </h1>
@@ -69,6 +70,7 @@ const isLoguoutModalOpened = ref(false)
 
 <style scoped lang="scss">
 .header {
+  width: 100%;
   height: $header-height;
   color: $primary;
   background-color: $secondary;
@@ -80,8 +82,9 @@ const isLoguoutModalOpened = ref(false)
     justify-content: space-between;
     align-items: center;
     height: 100%;
+    width: 100%;
   }
-  &__filter {
+  &__btn-filter {
     @media #{$xl-screen} {
       @include hidden;
     }

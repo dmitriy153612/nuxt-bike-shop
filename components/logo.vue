@@ -1,6 +1,6 @@
 <template>
   <NuxtLink
-    to="/"
+    :to="{ path: '/' }"
     class="logo"
   >
     <img

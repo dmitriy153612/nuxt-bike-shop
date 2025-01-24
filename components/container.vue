@@ -8,18 +8,15 @@
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    type?: 'header' | 'section'
-  }>(),
-  {
-    type: 'section',
-  },
-)
+const props = withDefaults(defineProps<{
+  type?: 'content' | 'box'
+}>(), {
+  type: 'content',
+})
 
 const containerClass = ref({
-  'container--section': props.type === 'section',
-  'container--header': props.type === 'section',
+  'container--content': props.type === 'content',
+  'container--box': props.type === 'box',
 })
 </script>
 
@@ -33,11 +30,12 @@ const containerClass = ref({
   @media #{$sm-screen} {
     padding-inline: $container-inline-padding-sm;
   }
+
   @media #{$lg-screen} {
     padding-inline: $container-inline-padding-lg;
   }
 
-  &--section {
+  &--content {
     padding-top: $container-padding-top;
     @media #{$sm-screen} {
       padding-top: $container-padding-top-sm;

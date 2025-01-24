@@ -1,6 +1,6 @@
-export default defineNuxtRouteMiddleware(async ({ query }) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const { fetchFilter } = useFilterStore()
   const { fetchCatalog } = useCatalogStore()
 
-  await Promise.allSettled([fetchCatalog(query), fetchFilter()])
+  await Promise.allSettled([fetchCatalog(to.query), fetchFilter()])
 })
