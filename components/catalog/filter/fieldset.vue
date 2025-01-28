@@ -20,12 +20,12 @@
 </template>
 
 <script setup lang="ts">
-import type { ISize } from '~/types/catalog'
+import type { IFilterOption } from '~/types/catalog'
 
 const props = defineProps<{
   modelValue: string[]
   legend: string
-  properties: ISize[]
+  properties: IFilterOption[]
 }>()
 
 const emit = defineEmits<{

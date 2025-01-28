@@ -1,6 +1,9 @@
 <template>
   <footer class="footer">
-    <Container class="footer__inner" type="box">
+    <Container
+      class="footer__inner"
+      type="box"
+    >
       FOOTER
     </Container>
   </footer>

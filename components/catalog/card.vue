@@ -91,6 +91,14 @@ async function fetchAddToBasket() {
     font-size: 0;
     outline: none;
   }
+  &__link:focus-visible &__title {
+    color: $alert;
+  }
+  &__link:hover &__title {
+    @media #{$md-screen} {
+      color: $alert;
+    }
+  }
   &__discount {
     position: absolute;
     top: 10px;
@@ -128,6 +136,7 @@ async function fetchAddToBasket() {
     font-size: 20px;
     font-weight: 800;
     color: $secondary;
+    @include transition(color);
   }
   &__size-picker {
     align-self: flex-end;

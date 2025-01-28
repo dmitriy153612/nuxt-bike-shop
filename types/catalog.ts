@@ -1,13 +1,7 @@
-export interface ISize {
+export interface IFilterOption {
   _id: string
   name: string
   nameEn: string
-}
-
-export type IBrand = ISize
-
-export interface IColor extends ISize {
-  code: string
 }
 
 export interface ICatalogConfig {
@@ -19,13 +13,13 @@ export interface ICatalogConfig {
 
 export interface ICatalogCard {
   _id: string
-  brand: IBrand
-  color: IColor
+  brand: IFilterOption
+  color: IFilterOption
   pictures: string[]
   price: number
   oldPrice: number
   discount: number
-  sizes: ISize[]
+  sizes: IFilterOption[]
   title: string
 }
 

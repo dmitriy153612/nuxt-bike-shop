@@ -28,11 +28,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { ISize } from '@/types/catalog'
+import type { IFilterOption } from '@/types/catalog'
 
 const props = defineProps<{
   modelValue: string
-  sizes: ISize[]
+  sizes: IFilterOption[]
 }>()
 
 const emit = defineEmits<{

@@ -1,18 +1,20 @@
 <template>
   <span class="price-box">
     <span class="price-box__price">{{
-      $formatCurrency(price)
+      formatCurrency(price)
     }}</span>
     <span
       v-if="oldPrice"
       class="price-box__old-price"
     >
-      {{ $formatCurrency(oldPrice) }}
+      {{ formatCurrency(oldPrice) }}
     </span>
   </span>
 </template>
 
 <script setup lang="ts">
+import formatCurrency from '@/helpers/formatCurrency'
+
 defineProps<{
   price: string | number
   oldPrice?: string | number

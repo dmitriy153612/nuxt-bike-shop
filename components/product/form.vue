@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ISize } from '@/types/catalog'
+import type { IFilterOption } from '@/types/catalog'
 
 const filterStore = useFilterStore()
 const basketStore = useBasketStore()
@@ -48,7 +48,7 @@ const props = defineProps<{
   modelValue: string
   brand: string
   price: string | number
-  sizes: ISize[]
+  sizes: IFilterOption[]
   oldPrice?: string | number
   productId: string
 }>()

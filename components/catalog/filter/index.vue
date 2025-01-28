@@ -42,6 +42,7 @@
         </Btn>
         <Btn
           class="filter__btn"
+          :disabled="isFilterEmpty"
           @click.prevent="resetFilter"
         >
           Сбросить
@@ -52,6 +53,7 @@
 </template>
 
 <script setup lang="ts">
+import getStringArray from '@/helpers/getStringArray'
 import type { IFilter } from '@/types/catalog'
 
 const filterStore = useFilterStore()
@@ -59,19 +61,35 @@ const catalogStore = useCatalogStore()
 const router = useRouter()
 const route = useRoute()
 
+const isFilterComponentLoaded = ref(false)
+
 const filter = ref<IFilter>({
-  sizeId: getArrayFromRoute('sizeId'),
-  brandId: getArrayFromRoute('brandId'),
-  colorId: getArrayFromRoute('colorId'),
-  minPrice: Number(route.query['minPrice']) || undefined,
-  maxPrice: Number(route.query['maxPrice']) || undefined,
+  sizeId: [],
+  brandId: [],
+  colorId: [],
+  minPrice: undefined,
+  maxPrice: undefined,
+})
+
+const isFilterEmpty = computed<boolean>(() => {
+  return Object.values(filter.value).every((value) => {
+    return Array.isArray(value) ? !value.length : !value
+  })
 })
 
 function setFilterToRouter() {
   router.replace({
-    query: { ...route.query, ...filter.value, ...{ page: 1 } },
+    query: { ...route.query, ...filter.value, page: 1 },
   })
   catalogStore.openFilter(false)
+}
+
+function setFilterFromRoute() {
+  filter.value.sizeId = getStringArray(route.query['sizeId'])
+  filter.value.brandId = getStringArray(route.query['brandId'])
+  filter.value.colorId = getStringArray(route.query['colorId'])
+  filter.value.minPrice = getPriceFromRoute('minPrice')
+  filter.value.maxPrice = getPriceFromRoute('maxPrice')
 }
 
 function resetFilter() {
@@ -91,21 +109,21 @@ function resetFilter() {
         minPrice: undefined,
         maxPrice: undefined,
       },
-      ...{ page: 1 },
+      page: 1,
     },
   })
 }
 
-function getArrayFromRoute(properyName: string): string[] {
-  if (properyName in route.query) {
-    const value = route.query[properyName]
-    if (Array.isArray(value)) {
-      return value.map(item => String(item))
-    }
-    return [String(value)]
-  }
-  return []
+function getPriceFromRoute(priceKey: string): number | undefined {
+  const value = route.query[priceKey]
+  return value ? Number(value) : undefined
 }
+
+onMounted(() => {
+  isFilterComponentLoaded.value = true
+})
+
+watch(() => route.query, setFilterFromRoute, { immediate: true })
 </script>
 
 <style scoped lang="scss">

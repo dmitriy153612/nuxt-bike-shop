@@ -1,4 +1,4 @@
-import type { IBrand, IColor, ISize } from '@/types/catalog'
+import type { IFilterOption } from '@/types/catalog'
 
 export interface IAddedProductToBasket {
   productId: string
@@ -17,8 +17,8 @@ export interface IBasketConfig {
 export interface IBasketProduct {
   cartItemId: string
   amount: number
-  brand: IBrand
-  color: IColor
+  brand: IFilterOption
+  color: IFilterOption
   discount: number
   oldPrice: number
   picture: string
@@ -27,7 +27,7 @@ export interface IBasketProduct {
   priceForOne: number
   productId: string
   selected: boolean
-  size: ISize
+  size: IFilterOption
   title: string
 }
 

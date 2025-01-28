@@ -3,16 +3,19 @@
     <main class="catalog-page__main">
       <section class="catalog-page__sec">
         <Container class="catalog-page__inner">
-          <PageTitle class="catalog-page__title">
-            Mountain bikes
-          </PageTitle>
-          <AppSelect
-            v-model="sorting"
-            class="catalog-page__select"
-            :options="SORTING_OPTIONS"
-          />
-          <div class="catalog-page__counter">
-            найдено <b>{{ catalogStore.config?.totalProducts || 0 }}</b> шт.
+          <div class="catalog-page__top">
+            <PageTitle class="catalog-page__title">
+              Mountain bikes
+            </PageTitle>
+            <AppSelect
+              v-model="sorting"
+              class="catalog-page__select"
+              :options="SORTING_OPTIONS"
+            />
+            <div class="catalog-page__counter">
+              найдено <b>{{ catalogStore.config?.totalProducts || 0 }}</b> шт.
+            </div>
+            <CatalogFilterApplied class="catalog-page__applied-filter" />
           </div>
 
           <Catalog
@@ -29,6 +32,7 @@
           <CatalogFilter class="catalog-page__filter" />
 
           <Drawer
+            v-if="windowWidth < 1280"
             :block-scroll="true"
             :visible="catalogStore.isFilterOpened"
             class="catalog-page__drawer"
@@ -54,6 +58,7 @@ definePageMeta({
 const catalogStore = useCatalogStore()
 const route = useRoute()
 const router = useRouter()
+const windowWidth = useWindowWidth()
 
 const page = computed({
   get: () => Number(route.query.page) || 1,
@@ -96,7 +101,7 @@ function setSortingToRoute(sortingId: string) {
 }
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .catalog-page {
   &__main,
   &__sec,
@@ -106,70 +111,56 @@ function setSortingToRoute(sortingId: string) {
   &__inner {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    row-gap: 16px;
     grid-template-areas:
-      'title'
-      'select'
-      'counter'
+      'top'
       'catalog'
       'pagination';
-
-      @media #{$sm-screen} {
-        grid-template-columns: auto 1fr;
-        grid-template-rows: auto auto 1fr auto;
-        grid-template-areas:
-        'title title'
-        'select counter'
-        'catalog catalog'
-        'pagination pagination'
-        ;
-      }
-
-    @media #{$md-screen} {
-      grid-template-columns: auto 1fr auto;
-      grid-template-areas:
-        'title select counter'
-        'catalog catalog'
-        'pagination pagination';
-    }
     @media #{$xl-screen} {
-      grid-template-columns: auto auto 1fr;
+      grid-template-columns: auto 1fr;
       grid-template-areas:
-        'filter title title'
-        'filter select counter'
-        'filter catalog catalog'
-        'filter pagination pagination';
+        'filter top'
+        'filter catalog'
+        'filter pagination';
+    }
+  }
+  &__top {
+    grid-area: top;
+    display: grid;
+    row-gap: 16px;
+    grid-template-areas:
+    'title'
+    'select'
+    'counter'
+    'applied-filter'
+    ;
+    @media #{$sm-screen} {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      column-gap: 16px;
+      grid-template-areas:
+    'title title'
+    'select counter'
+    'applied-filter applied-filter'
+    ;
     }
   }
   &__title {
     grid-area: title;
     text-align: center;
-    align-self: center;
-    margin-bottom: 24px;
   }
   &__select {
-    margin-bottom: 16px;
-    width: max-content;
     grid-area: select;
-    margin-right: 16px;
-    @media #{$sm-screen} {
-      margin-bottom: 0;
-    }
-    @media #{$md-screen} {
-      margin-bottom: 0;
-    }
-    @media #{$xl-screen} {
-      justify-self: center;
-    }
+    width: max-content;
   }
   &__counter {
     grid-area: counter;
-    align-self: center;
-    margin-bottom: 16px;
     font-size: 18px;
-    @media #{$sm-screen} {
-      margin-bottom: 0;
-    }
+  }
+  &__applied-filter {
+    grid-area: applied-filter;
+
   }
   &__catalog {
     grid-area: catalog;
@@ -177,9 +168,6 @@ function setSortingToRoute(sortingId: string) {
     z-index: 1;
     flex-grow: 1;
     margin-bottom: 34px;
-    @media #{$sm-screen} {
-      padding-top: 40px;
-    }
   }
   &__pagination {
     grid-area: pagination;

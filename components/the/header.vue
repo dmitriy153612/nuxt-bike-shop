@@ -36,7 +36,10 @@
               <span class="header__btn-text">Выйти</span>
             </Btn>
           </li>
-          <li class="header__item">
+          <li
+            v-if="authStore.token"
+            class="header__item"
+          >
             <Btn
               icon-name="basket"
               appearance="nav"
@@ -100,7 +103,6 @@ const isLoguoutModalOpened = ref(false)
   &__list {
     display: flex;
     column-gap: 8px;
-    padding-right: 8px;
   }
 
   &__btn-text {
