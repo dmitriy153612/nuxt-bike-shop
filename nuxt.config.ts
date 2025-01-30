@@ -6,7 +6,14 @@ const MyPreset = definePreset(Aura, {
 
 })
 export default defineNuxtConfig({
-  modules: ['@primevue/nuxt-module', '@pinia/nuxt', '@nuxt/image', '@nuxt/eslint'],
+  modules: [
+    '@primevue/nuxt-module',
+    '@pinia/nuxt',
+    '@nuxt/image',
+    '@nuxt/eslint',
+    '@nuxt/fonts',
+    '@vueuse/nuxt',
+  ],
   ssr: true,
   devtools: { enabled: true },
   app: {
@@ -54,6 +61,18 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+  fonts: {
+    provider: 'google',
+    families: [
+      {
+        name: 'Montserrat',
+        weights: [400, 500, 600, 700, 800],
+        styles: ['normal'],
+        subsets: ['cyrillic', 'latin'],
+        display: 'swap',
+      },
+    ],
   },
   primevue: {
     options: {

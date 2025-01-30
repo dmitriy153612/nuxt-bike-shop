@@ -141,7 +141,7 @@ watch(() => route.query, setFilterFromRoute, { immediate: true })
   &__inputs {
     display: grid;
     row-gap: 14px;
-    @media #{$xl-screen} {
+    @media #{$xxl-screen} {
       width: 152px;
     }
   }

@@ -12,11 +12,13 @@
       <Btn
         class="form__btn"
         type="submit"
+        :show-spinner="showSpinner"
         @click="() => resolve()"
       >
         {{ btnResolveName }}
       </Btn>
       <Btn
+        v-if="!hideBtnCancel || !showSpinner"
         class="form__btn"
         type="submit"
         @click="closeModal"
@@ -32,7 +34,8 @@ const props = defineProps<{
   modelValue: boolean
   btnResolveName: string
   title: string
-  resolveFunction: () => void | Promise<void>
+  hideBtnCancel?: boolean
+  showSpinner?: boolean
 }>()
 
 const updatedModelValue = computed({
@@ -42,6 +45,7 @@ const updatedModelValue = computed({
 
 const emit = defineEmits<{
   (e: 'update:modelValue', modelValue: boolean): void
+  (e: 'resolve'): void
 }>()
 
 function closeModal() {
@@ -49,8 +53,7 @@ function closeModal() {
 }
 
 async function resolve() {
-  await props.resolveFunction()
-  closeModal()
+  emit('resolve')
 }
 </script>
 

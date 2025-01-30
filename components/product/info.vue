@@ -44,7 +44,7 @@ defineProps<{
 .product-info {
   padding-top: 32px;
 
-  @media #{$sm-screen} {
+  @media #{$md-screen} {
     padding-top: 48px;
   }
   &__title {
@@ -71,7 +71,7 @@ defineProps<{
   &__inner-item {
     row-gap: 4px;
     grid-template-columns: 1fr;
-    @media #{$sm-screen} {
+    @media #{$md-screen} {
       display: grid;
       grid-template-columns: 0.3fr 0.7fr;
     }
@@ -85,13 +85,13 @@ defineProps<{
     margin-bottom: 6px;
     font-weight: 800;
     font-size: 14px;
-    @media #{$sm-screen} {
+    @media #{$md-screen} {
       margin-bottom: 0;
     }
 
     & span {
       display: none;
-      @media #{$sm-screen} {
+      @media #{$md-screen} {
         display: flex;
         flex-grow: 1;
       border-bottom: 1px dotted $secondary;

@@ -14,7 +14,7 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    type?: 'page' | 'btn'
+    type?: 'page' | 'btn' | 'card'
   }>(),
   {
     type: 'btn',
@@ -27,6 +27,13 @@ const config = computed(() => {
       strokeWidth: '6',
       class: 'overlay--page',
       style: { height: '100px', width: '100px' },
+    }
+  }
+  else if (props.type === 'card') {
+    return {
+      strokeWidth: '4',
+      class: 'overlay--card',
+      style: { height: '80px', width: '80px' },
     }
   }
   return {
@@ -53,6 +60,12 @@ const config = computed(() => {
     inset: 0;
     z-index: 1;
     background-color: $secondary;
+  }
+  &--card {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: rgba($secondary, 0.5);
   }
 }
 </style>

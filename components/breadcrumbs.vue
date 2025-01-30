@@ -46,7 +46,7 @@ defineProps<{
       outline: none;
   }
   &__item:not(:last-child) &__link:hover {
-      @media #{$md-screen} {
+      @media #{$xl-screen} {
       border-bottom-color: inherit;
     }
   }

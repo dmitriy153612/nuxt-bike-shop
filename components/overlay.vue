@@ -42,7 +42,7 @@ const overlayClass = ref({
   }
   &--left {
     justify-content: flex-start;
-    @media #{$lg-screen} {
+    @media #{$xxl-screen} {
       position: static;
       z-index: 0;
       background-color: transparent;

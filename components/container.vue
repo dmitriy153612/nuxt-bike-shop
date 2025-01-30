@@ -25,26 +25,26 @@ const containerClass = ref({
   width: 100%;
   max-width: $container-max-width;
   margin-inline: auto;
-  padding-inline: $container-inline-padding;
+  padding-inline: 16px;
 
-  @media #{$sm-screen} {
-    padding-inline: $container-inline-padding-sm;
+  @media #{$md-screen} {
+    padding-inline: 32px;
   }
 
-  @media #{$lg-screen} {
-    padding-inline: $container-inline-padding-lg;
+  @media #{$xxl-screen} {
+    padding-inline: 40px;
   }
 
   &--content {
-    padding-top: $container-padding-top;
-    @media #{$sm-screen} {
-      padding-top: $container-padding-top-sm;
+    padding-top: 16px;
+    @media #{$md-screen} {
+      padding-top: 20px;
     }
     @media #{$md-screen} {
-      padding-top: $container-padding-top-md;
+      padding-top: 28px;
     }
-    @media #{$lg-screen} {
-      padding-top: $container-padding-top-lg;
+    @media #{$xxl-screen} {
+      padding-top: 32px;
     }
   }
 }

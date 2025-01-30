@@ -4,7 +4,10 @@
       type="box"
       class="header__inner"
     >
-      <div class="header__btn-filter">
+      <div
+        v-if="route.name === 'catalog'"
+        class="header__btn-filter"
+      >
         <Btn
           icon-name="filter"
           appearance="nav"
@@ -55,7 +58,7 @@
         v-model:model-value="isLoguoutModalOpened"
         title="Выйти из аккаунта?"
         btn-resolve-name="Выйти"
-        :resolve-function="authStore.logout"
+        @resolve="logout"
       />
       <ModalLogin />
       <ModalRegistration />
@@ -64,11 +67,17 @@
 </template>
 
 <script setup lang="ts">
+const route = useRoute()
 const authStore = useAuthStore()
 const basketStore = useBasketStore()
 const catalogStore = useCatalogStore()
 
 const isLoguoutModalOpened = ref(false)
+
+function logout() {
+  authStore.logout()
+  isLoguoutModalOpened.value = false
+}
 </script>
 
 <style scoped lang="scss">
@@ -77,8 +86,8 @@ const isLoguoutModalOpened = ref(false)
   height: $header-height;
   color: $primary;
   background-color: $secondary;
-  @media #{$lg-screen} {
-    height: $header-height-lg;
+  @media #{$xxl-screen} {
+    height: $header-height-xxl;
   }
   &__inner {
     display: flex;
@@ -88,13 +97,13 @@ const isLoguoutModalOpened = ref(false)
     width: 100%;
   }
   &__btn-filter {
-    @media #{$xl-screen} {
+    @media #{$xxl-screen} {
       @include hidden;
     }
   }
   &__title {
     @include hidden;
-    @media #{$xl-screen} {
+    @media #{$xxl-screen} {
       @include visible;
       font-size: 24px;
       font-weight: 700;

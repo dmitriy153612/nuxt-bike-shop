@@ -3,24 +3,22 @@
     class="form"
     @submit.prevent="addToBasket"
   >
-    <ProductOption
+    <OptionDetails
       option-name="Бренд"
       :option-value="brand"
       class="form__option"
     />
-    <ProductOption
+    <OptionDetails
       option-name="Размер"
       :option-value="sizeName"
       class="form__option"
     />
-    <p class="form__price-box">
-      <span class="form__price-box-name">Цена:</span>
+    <OptionDetails option-name="Цена">
       <Price
         :price="price"
         :old-price="oldPrice"
-        class="form__price-box-price"
       />
-    </p>
+    </OptionDetails>
     <div class="form__size-picker-wrapper">
       <Picker
         v-model="checkedSizeId"
@@ -80,14 +78,6 @@ async function addToBasket() {
 .form {
   display: grid;
   row-gap: 8px;
-  &__price-box {
-    display: grid;
-    row-gap: 4px;
-  }
-  &__price-box-name {
-    font-size: 18px;
-    font-weight: 600;
-  }
   &__size-picker-wrapper {
     padding-top: 8px;
     padding-bottom: 16px;

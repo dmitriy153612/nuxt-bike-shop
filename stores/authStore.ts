@@ -4,6 +4,7 @@ import { isIAuthError } from '@/types/auth'
 
 export const useAuthStore = defineStore('authStore', () => {
   const basketStore = useBasketStore()
+  const router = useRouter()
 
   const token = useCookie('token')
 
@@ -51,6 +52,7 @@ export const useAuthStore = defineStore('authStore', () => {
   function logout() {
     token.value = ''
     basketStore.setTotalAmount(0)
+    router.replace({ name: 'catalog' })
   }
 
   async function fetchCheckAuth() {

@@ -80,7 +80,7 @@ watch(() => checkedSizeId.value, (newValue) => {
     'form'
     ;
     padding-bottom: 32px;
-    @media #{$lg-screen} {
+    @media #{$xxl-screen} {
       grid-template-columns: 1fr auto;
       align-items: flex-start;
       grid-template-areas:

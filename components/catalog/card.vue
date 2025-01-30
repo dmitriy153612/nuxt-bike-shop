@@ -95,7 +95,7 @@ async function fetchAddToBasket() {
     color: $alert;
   }
   &__link:hover &__title {
-    @media #{$md-screen} {
+    @media #{$xl-screen} {
       color: $alert;
     }
   }

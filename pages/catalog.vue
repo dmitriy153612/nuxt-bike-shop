@@ -32,7 +32,7 @@
           <CatalogFilter class="catalog-page__filter" />
 
           <Drawer
-            v-if="windowWidth < 1280"
+            v-if="width < 1280"
             :block-scroll="true"
             :visible="catalogStore.isFilterOpened"
             class="catalog-page__drawer"
@@ -51,14 +51,15 @@ import { SORTING_OPTIONS } from '@/config/catalogVariables'
 import type { ISelect } from '@/types/select'
 
 definePageMeta({
-  title: 'Каталог',
   middleware: 'catalog',
 })
 
 const catalogStore = useCatalogStore()
+
 const route = useRoute()
 const router = useRouter()
-const windowWidth = useWindowWidth()
+
+const { width } = useWindowSize()
 
 const page = computed({
   get: () => Number(route.query.page) || 1,
@@ -117,7 +118,7 @@ function setSortingToRoute(sortingId: string) {
       'top'
       'catalog'
       'pagination';
-    @media #{$xl-screen} {
+    @media #{$xxl-screen} {
       grid-template-columns: auto 1fr;
       grid-template-areas:
         'filter top'
@@ -135,7 +136,7 @@ function setSortingToRoute(sortingId: string) {
     'counter'
     'applied-filter'
     ;
-    @media #{$sm-screen} {
+    @media #{$md-screen} {
       grid-template-columns: auto 1fr;
       align-items: center;
       column-gap: 16px;
@@ -176,7 +177,7 @@ function setSortingToRoute(sortingId: string) {
   &__filter {
     grid-area: filter;
     display: none;
-    @media #{$xl-screen} {
+    @media #{$xxl-screen} {
       display: block;
     }
   }

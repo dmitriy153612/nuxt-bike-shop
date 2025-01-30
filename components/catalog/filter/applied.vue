@@ -132,7 +132,7 @@ function setFocus(event: Event) {
       border-color: $alert;
     }
     &:hover {
-      @media #{$md-screen} {
+      @media #{$xl-screen} {
         border-color: $alert;
       }
     }

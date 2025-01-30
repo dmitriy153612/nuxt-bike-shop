@@ -1,10 +1,10 @@
 <template>
   <component
     :is="component"
-    v-bind="{ to }"
+    v-bind="disabled ? {} : { to }"
     class="button"
     :class="btnClass"
-    :disabled="showSpinner"
+    :disabled="showSpinner || disabled"
     :type="typeAttrs"
   >
     <span class="button__inner">
@@ -40,13 +40,13 @@ const props = withDefaults(
     to?: string
     iconName?: string
     count?: number
-    appearance?: 'nav' | 'submit' | 'cyrcle'
+    appearance?: 'nav' | 'submit' | 'icon'
     showSpinner?: boolean
     type?: 'submit' | 'button'
+    disabled?: boolean
   }>(),
   {
     appearance: 'submit',
-    showSpinner: false,
     type: 'button',
   },
 )
@@ -65,7 +65,7 @@ const icon = computed(() => {
 const btnClass = ref({
   'button--nav': props.appearance === 'nav',
   'button--submit': props.appearance === 'submit',
-  'button--cyrcle': props.appearance === 'cyrcle',
+  'button--icon': props.appearance === 'icon',
 })
 </script>
 
@@ -80,12 +80,16 @@ const btnClass = ref({
   outline: none;
   background-color: $secondary;
   color: $primary;
-  @include transition(border-color);
+  @include transition(border-color, opacity);
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
 
   &:focus-visible {
     border-color: $primary;
   }
-  @media #{$md-screen} {
+  @media #{$xl-screen} {
     &:hover & {
       &__inner {
         color: $alert;
@@ -96,6 +100,9 @@ const btnClass = ref({
     }
   }
 
+  &:active {
+    opacity: 0.9;
+  }
   &:active & {
     &__inner {
       color: $alert;
@@ -115,6 +122,9 @@ const btnClass = ref({
       width: 28px;
     }
   }
+  &--nav {
+    background-color: transparent;
+  }
   &--nav & {
     &__inner {
       padding: 2px 4px;
@@ -124,11 +134,18 @@ const btnClass = ref({
       width: 34px;
     }
   }
-  &--cyrcle {
-    border-radius: 50%;
-    width: 30px;
+  &--icon & {
+    &__inner {
+      padding: 0;
+    }
+    &__icon-wrapper {
+      height: 28px;
+      width: 28px;
+    }
+    &__text {
+      display: none;
+    }
   }
-
   &__inner {
     display: flex;
     column-gap: 8px;
@@ -140,6 +157,7 @@ const btnClass = ref({
 
   &__icon-wrapper {
     position: relative;
+    display: flex;
     font-size: 0;
   }
 

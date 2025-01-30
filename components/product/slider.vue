@@ -46,7 +46,7 @@ onMounted(() => emit('load'))
   :deep(.p-carousel-prev-button),
   :deep(.p-carousel-next-button) {
     display: none;
-    @media #{$sm-screen} {
+    @media #{$md-screen} {
       display: block;
     }
   }

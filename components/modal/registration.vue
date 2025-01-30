@@ -250,7 +250,7 @@ watch(
       }
     }
 
-    @media #{$md-screen} {
+    @media #{$xl-screen} {
       &:hover {
         outline: none;
         color: $primary;

@@ -27,7 +27,7 @@
     box-shadow: 0px 0px 10px 6px $primary;
   }
 
-  @media #{$lg-screen} {
+  @media #{$xxl-screen} {
     width: 50px;
     height: 50px;
   }

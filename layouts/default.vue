@@ -7,7 +7,7 @@
     >
       <Breadcrumbs
         v-if="route.name !== 'catalog'"
-        :breadcrumbs="productBreadcrumbs"
+        :breadcrumbs="breadcrumbs"
       />
     </Container>
     <div class="layout__content">
@@ -21,10 +21,23 @@
 const route = useRoute()
 const productStore = useProductStore()
 
-const productBreadcrumbs = computed(() => [
-  { label: 'Каталог', path: '/' },
-  { label: productStore.product?.title || '', path: '' },
-])
+const catalogBreadcrumb = { label: 'Каталог', path: '/' }
+const basketBreadcrumb = { label: 'Корзина', path: '/basket' }
+const orderBreadcrumb = { label: 'Оформление заказа', path: '/order' }
+const productBreadcrumb = computed(() => ({ label: productStore.product?.title || '', path: '' }))
+
+const breadcrumbs = computed(() => {
+  if (route.name === 'product-id') {
+    return [catalogBreadcrumb, productBreadcrumb.value]
+  }
+  else if (route.name === 'basket') {
+    return [catalogBreadcrumb, basketBreadcrumb]
+  }
+  else if (route.name === 'order') {
+    return [catalogBreadcrumb, basketBreadcrumb, orderBreadcrumb]
+  }
+  return []
+})
 </script>
 
 <style scoped lang="scss">
@@ -41,8 +54,8 @@ const productBreadcrumbs = computed(() => [
   }
   &__breadcrumbs-box {
     padding-top: $header-height;
-    @media #{$lg-screen} {
-      padding-top: $header-height-lg;
+    @media #{$xxl-screen} {
+      padding-top: $header-height-xxl;
     }
   }
   &__content {
