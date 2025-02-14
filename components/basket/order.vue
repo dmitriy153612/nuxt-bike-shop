@@ -33,7 +33,7 @@
         <OptionDetails
           class="order__option"
           option-name="Итого"
-          :big="true"
+          size="big"
         >
           <Price :price="finalPrice" />
         </OptionDetails>
@@ -51,6 +51,7 @@
       :hide-btn-cancel="true"
       title="Вберите товары"
       btn-resolve-name="Ок"
+      @resolve="isModalShown = false"
     />
   </div>
 </template>

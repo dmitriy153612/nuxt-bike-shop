@@ -7,8 +7,10 @@
         class="breadcrumbs__item"
       >
         <NuxtLink
-          :to="item.path"
           class="breadcrumbs__link"
+          active-class="breadcrumbs__link--active"
+          :to="item.path"
+          :tabindex="index === breadcrumbs.length - 1 ? -1 : 0"
         >
           {{ item.label }}
         </NuxtLink>
@@ -34,6 +36,7 @@ defineProps<{
   padding-top: 8px;
   &__list {
     display: flex;
+    flex-wrap: wrap;
   }
   &__item {
     display: flex;
@@ -41,25 +44,28 @@ defineProps<{
     font-size: 18px;
     line-height: 1;
   }
-  &__item:not(:last-child) &__link:focus-visible {
-      border-bottom-color: inherit;
-      outline: none;
-  }
-  &__item:not(:last-child) &__link:hover {
-      @media #{$xl-screen} {
-      border-bottom-color: inherit;
-    }
-  }
-  &__item:last-child &__link {
-    opacity: 0.6;
-    cursor: default;
-  }
   &__link {
     border: 1px solid transparent;
-    @include transition(border-color)
+    color: $secondary;
+    @include transition(border-color);
+    &:focus-visible {
+      border-bottom-color: inherit;
+      outline: none;
+    }
+    &:hover {
+        @media #{$xl-screen} {
+        border-bottom-color: $secondary;
+      }
+    }
+    &--active {
+      opacity: 0.7;
+      cursor: default;
+      pointer-events: none;
+    }
   }
   &__separator {
     padding-inline: 4px;
+    color: $secondary;
     cursor: default;
   }
 }

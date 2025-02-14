@@ -16,7 +16,7 @@
         />
       </div>
       <h1 class="header__title">
-        Bike-Shop
+        <NuxtLink to="/catalog">Bike-Shop</NuxtLink>
       </h1>
       <Logo />
       <nav>
@@ -67,6 +67,8 @@
 </template>
 
 <script setup lang="ts">
+import { NuxtLink } from '#components'
+
 const route = useRoute()
 const authStore = useAuthStore()
 const basketStore = useBasketStore()
@@ -107,6 +109,18 @@ function logout() {
       @include visible;
       font-size: 24px;
       font-weight: 700;
+    }
+    & a {
+      border: 2px solid transparent;
+      padding: 2px;
+      border-radius: 6px;
+      outline: none;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(white, 0.5);
+      @include transition(border-color);
+      &:focus-visible {
+        border-color: $primary;
+      }
     }
   }
   &__list {

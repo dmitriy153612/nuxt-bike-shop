@@ -1,4 +1,3 @@
-import { useAuthStore } from '~/stores/authStore'
 import type {
   IAddedProductToBasket,
   IBasketProduct,
@@ -15,6 +14,8 @@ import {
 
 export const useBasketStore = defineStore('basketStore', () => {
   const authStore = useAuthStore()
+  const { showPageSpinner } = useGlobalStore()
+
   const basketList = ref<IBasketProduct[]>([])
   const config = ref<IBasketConfig>({
     selectedAmount: 0,
@@ -27,6 +28,32 @@ export const useBasketStore = defineStore('basketStore', () => {
   const amountOfCurrentChangingProducts = ref<number>(0)
   const isAllListSelectLoading = ref<boolean>(false)
 
+  const isFetchAddProductFailed = ref<boolean>(false)
+
+  function setBasket(basket: IBasketProduct[], basketConfig: IBasketConfig) {
+    basketList.value = basket
+    if (basketConfig) {
+      config.value = basketConfig
+    }
+  }
+
+  function setTotalAmount(amount: number) {
+    config.value.totalAmount = amount
+  }
+
+  function updateBasketAmount(
+    amount: number,
+    basketItemId: string,
+  ): IBasketProduct | undefined {
+    const product: IBasketProduct | undefined = basketList.value.find(
+      item => item.cartItemId === basketItemId,
+    )
+    if (product) {
+      product.amount = amount
+    }
+    return product
+  }
+
   async function fetchAddProduct({
     productId,
     sizeId,
@@ -37,7 +64,9 @@ export const useBasketStore = defineStore('basketStore', () => {
       return
     }
     try {
-      const { totalCartAmount } = await $fetch<{ totalCartAmount: number }>(
+      isFetchAddProductFailed.value = false
+
+      const res = await $fetch<{ totalCartAmount: number }>(
         BASKET_ADD_URL,
         {
           method: 'POST',
@@ -47,30 +76,30 @@ export const useBasketStore = defineStore('basketStore', () => {
           },
         },
       )
-
-      setTotalAmount(totalCartAmount)
+      setTotalAmount(res.totalCartAmount)
     }
     catch (err) {
       console.error(err)
+      isFetchAddProductFailed.value = true
     }
-  }
-
-  function setTotalAmount(amount: number) {
-    config.value.totalAmount = amount
   }
 
   async function fetchGetBasket() {
     try {
+      showPageSpinner(true)
       const res = await $fetch<IBasketResponse>(BASKET_URL, {
         headers: {
           Authorization: `Bearer ${authStore.token}`,
         },
       })
-      basketList.value = res.products
-      config.value = res.config
+
+      setBasket(res.products, res.config)
     }
     catch (err) {
       console.error(err)
+    }
+    finally {
+      showPageSpinner(false)
     }
   }
 
@@ -108,8 +137,7 @@ export const useBasketStore = defineStore('basketStore', () => {
         },
       })
 
-      basketList.value = res.products
-      config.value = res.config
+      setBasket(res.products, res.config)
     }
     catch (err) {
       console.error(err)
@@ -123,19 +151,6 @@ export const useBasketStore = defineStore('basketStore', () => {
         isAllListSelectLoading.value = false
       }
     }
-  }
-
-  function updateBasketAmount(
-    amount: number,
-    basketItemId: string,
-  ): IBasketProduct | undefined {
-    const product: IBasketProduct | undefined = basketList.value.find(
-      item => item.cartItemId === basketItemId,
-    )
-    if (product) {
-      product.amount = amount
-    }
-    return product
   }
 
   async function fetchChangeBasketAmount(product: IBasketProduct | undefined) {
@@ -153,15 +168,14 @@ export const useBasketStore = defineStore('basketStore', () => {
           Authorization: `Bearer ${authStore.token}`,
         },
       })
-      basketList.value = res.products
-      config.value = res.config
+
+      setBasket(res.products, res.config)
     }
     catch (err) {
       console.error(err)
       fetchGetBasket()
     }
     finally {
-      console.log(product?.selected)
       if (product?.selected) {
         amountOfCurrentChangingProducts.value--
       }
@@ -175,7 +189,6 @@ export const useBasketStore = defineStore('basketStore', () => {
         selectedProductsIds.push(product.cartItemId)
       }
     })
-    console.log(selectedProductsIds)
     try {
       const res = await $fetch<IBasketResponse>(BASKET_DELETE_URL, {
         method: 'DELETE',
@@ -184,7 +197,6 @@ export const useBasketStore = defineStore('basketStore', () => {
           Authorization: `Bearer ${authStore.token}`,
         },
       })
-      console.log(res)
       basketList.value = res.products
       config.value = res.config
     }
@@ -196,6 +208,7 @@ export const useBasketStore = defineStore('basketStore', () => {
   return {
     setTotalAmount,
     fetchAddProduct,
+    isFetchAddProductFailed,
     fetchGetBasket,
     basketList,
     config,
@@ -205,5 +218,6 @@ export const useBasketStore = defineStore('basketStore', () => {
     updateBasketAmount,
     amountOfCurrentChangingProducts,
     fetchDeleteSelectedProducts,
+    setBasket,
   }
 })

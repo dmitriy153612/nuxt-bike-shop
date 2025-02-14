@@ -70,6 +70,7 @@ const uniqId = useId()
     user-select: none;
     border: 2px solid transparent;
     border-radius: 4px;
+    color: $secondary;
     @include transition(border-color);
   }
   &__fake-checkbox {

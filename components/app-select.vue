@@ -1,11 +1,14 @@
 <template>
   <Select
     v-model="updatedModelValue"
-    class="select"
     :options="options"
     option-label="label"
     checkmark
     :highlight-on-select="false"
+
+    :pt="{
+      root: { class: 'select' },
+    }"
   />
 </template>
 
@@ -28,5 +31,15 @@ const updatedModelValue = computed({
 </script>
 
 <style scoped lang="scss">
-
+.select {
+  border: 1px solid $secondary;
+  border-radius: 4px;
+  background-color: $body;
+  &:focus-within {
+    border-color: $primary;
+  }
+  :deep(.p-select-label) {
+    color: $secondary;
+  }
+}
 </style>

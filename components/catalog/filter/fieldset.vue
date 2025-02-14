@@ -46,6 +46,7 @@ const updatedModelValue = computed({
   &__legend {
     margin-bottom: 10px;
     font-weight: 600;
+    color: $secondary;
   }
 }
 </style>

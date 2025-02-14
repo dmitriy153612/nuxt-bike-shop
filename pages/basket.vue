@@ -1,6 +1,9 @@
 <template>
   <div class="basket-page">
-    <main class="basket-page__main">
+    <Container
+      tag="main"
+      class="basket-page__main"
+    >
       <section class="basket-page__section">
         <ModalConfirm
           v-model="isModalDelShown"
@@ -9,9 +12,16 @@
           :show-spinner="isProductsDeleting"
           @resolve="fetchDeleteProducts"
         />
-        <Container class="basket-page__inner">
+        <ModalConfirm
+          v-model="isModalConfirmShown"
+          :hide-btn-cancel="true"
+          title="Вберите товары"
+          btn-resolve-name="Ок"
+          @resolve="isModalConfirmShown = false"
+        />
+        <div class="basket-page__inner">
           <PageTitle class="basket-page__title">
-            Корзина
+            {{ pageTitle }}
           </PageTitle>
           <div class="basket-page__selection">
             <Checkbox
@@ -34,45 +44,41 @@
               </span>
             </button>
           </div>
-          <div class="basket-page__box">
-            <div class="basket-page__list">
-              <BasketList
-                v-if="basketStore.basketList.length"
-                :basket-list="basketStore.basketList"
-              />
-              <h3
-                v-else
-                class="basket-page__message"
-              >
-                Корзина пуста
-              </h3>
-            </div>
-            <div class="basket-page__order-wrapper">
-              <div class="basket-page__order">
-                <BasketOrder
-                  v-if="basketStore.basketList.length"
-                  :amount="basketStore.config.selectedAmount"
-                  :price="basketStore.config.totalOldPrice"
-                  :discount="basketStore.config.totalPriceDifference"
-                  :final-price="basketStore.config.totalPrice"
-                  :show-spinner="isOrderSpinnerShown"
-                />
-              </div>
-            </div>
+          <div class="basket-page__list">
+            <BasketList
+              v-if="basketStore.basketList.length"
+              :basket-list="basketStore.basketList"
+            />
           </div>
-        </Container>
+        </div>
       </section>
-    </main>
+      <StickyAside page="basket">
+        <Checkout
+          v-if="basketStore.basketList.length"
+          :amount="basketStore.config.selectedAmount"
+          :price="basketStore.config.totalOldPrice"
+          :discount="basketStore.config.totalPriceDifference"
+          :final-price="basketStore.config.totalPrice"
+          :show-spinner="isOrderSpinnerShown"
+          btn-name="Оформить"
+          @resolve="handleBtnCheckout"
+        />
+      </StickyAside>
+    </Container>
   </div>
 </template>
 
 <script setup lang="ts">
+import StickyAside from '~/components/sticky-aside.vue'
+
 definePageMeta({
   middleware: 'basket',
 })
 const basketStore = useBasketStore()
+const router = useRouter()
 
 const isModalDelShown = ref<boolean>(false)
+const isModalConfirmShown = ref<boolean>(false)
 const isProductsDeleting = ref<boolean>(false)
 
 const updatedAllListSelected = computed<boolean>({
@@ -80,6 +86,10 @@ const updatedAllListSelected = computed<boolean>({
   set: (newValue) => {
     basketStore.fetchSelectProduct(newValue)
   },
+})
+
+const pageTitle = computed(() => {
+  return basketStore.basketList.length ? 'Корзина' : 'Корзина пуста'
 })
 
 const isOrderSpinnerShown = computed<boolean>(() => {
@@ -96,33 +106,42 @@ async function fetchDeleteProducts() {
   isModalDelShown.value = false
   isProductsDeleting.value = false
 }
+
+function handleBtnCheckout() {
+  if (!basketStore.config.selectedAmount) {
+    isModalConfirmShown.value = true
+  }
+  else {
+    router.push({ path: '/order' })
+  }
+}
 </script>
 
 <style scoped lang="scss">
 .basket-page {
-  &__main,
-  &__section,
-  &__inner {
-    height: 100%;
+  &__main {
+    display: grid;
+    row-gap: 24px;
+    @media #{$xl-screen} {
+      grid-template-columns: 1fr 264px;
+      column-gap: 24px;
+    }
   }
   &__inner {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     row-gap: 16px;
-    padding-bottom: 32px;
   }
   &__selection {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     background-color: $body;
+    box-shadow: 0 0 0 100vmax $body;
+    clip-path: inset(0 -100vmax);
     height: max-content;
-    @media #{$xl-screen} {
-      position: sticky;
-      top: $header-height;
-      z-index: 1;
-    }
+    position: sticky;
+    top: $header-height;
+    z-index: 1;
     @media #{$xxl-screen} {
       top: $header-height-xxl;
     }
@@ -158,47 +177,26 @@ async function fetchDeleteProducts() {
       color: $alert;
       @include transition(color)
     }
-  }
-  &__box {
-    flex-grow: 1;
-    display: grid;
-    grid-template-rows: auto 1fr;
-    row-gap: 40px;
-    @media #{$xl-screen} {
-      grid-template-columns: 1fr auto;
-      column-gap: 24px;
+    &-name {
+      color: $secondary;
     }
   }
-  &__list {
+  &__aside {
+    justify-self: center;
     @media #{$xl-screen} {
-      flex-grow: 1;
+      position: relative;
+      justify-self: stretch;
+      padding-top: 86px;
     }
   }
-  &__message {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-  }
-  &__order-wrapper {
-    display: flex;
-    justify-content: center;
-    min-width: 260px;
-    @media #{$xl-screen} {
-      display: block;
-    }
-  }
-  &__order {
-    background-color: $body;
+  &__checkout {
     @media #{$xl-screen} {
       position: sticky;
-      top: calc($header-height + 16px);
-      z-index: 2;
+      z-index: 1;
+      top: $header-height + 16px;
     }
     @media #{$xxl-screen} {
-      top: calc($header-height-xxl + 16px);
+      top: $header-height-xxl + 16px;
     }
   }
 }

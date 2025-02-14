@@ -47,6 +47,7 @@
                 :feedback="false"
                 toggle-mask
                 fluid
+                :input-props="{ autocomplete: 'new-password' }"
               />
               <label for="login-password">Пароль</label>
             </FloatLabel>
@@ -69,6 +70,8 @@
                 :feedback="false"
                 toggle-mask
                 fluid
+                autocomplete="on"
+                :input-props="{ autocomplete: 'new-password' }"
               />
               <label for="login-password-cinfirm">Подтвердите пароль</label>
             </FloatLabel>
@@ -159,7 +162,7 @@ async function onFormSubmit(e: FormSubmitEvent) {
     toast.add({
       severity: 'success',
       summary: 'Успешная регистрация',
-      life: 3000,
+      life: 1000,
     })
     openLogin()
 
@@ -177,7 +180,7 @@ async function onFormSubmit(e: FormSubmitEvent) {
     toast.add({
       severity: 'error',
       summary: 'Пользователь уже существует',
-      life: 3000,
+      life: 1000,
     })
   }
   else if (authStore.loginError && authStore.loginError.status === 500) {
@@ -185,7 +188,7 @@ async function onFormSubmit(e: FormSubmitEvent) {
     toast.add({
       severity: 'error',
       summary: 'Ошибка сервера',
-      life: 3000,
+      life: 1000,
     })
   }
 }

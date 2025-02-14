@@ -18,6 +18,7 @@ body,
 
 body {
   background-color: vars.$body;
+  min-width: 320px;
 }
 
 ul {

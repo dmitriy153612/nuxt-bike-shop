@@ -27,6 +27,7 @@
             :price="product.price"
             :old-price="product.oldPrice"
             :product-id="String(route.params.id || '')"
+            :title="product.title"
             class="product-page__form"
           />
           <ProductInfo :info-list="product.info" />
@@ -90,13 +91,21 @@ watch(() => checkedSizeId.value, (newValue) => {
     }
   }
   &__title {
-    margin-bottom: 16px;
     grid-area: title;
+    margin-bottom: 16px;
+    padding-top: 24px;
   }
   &__slider-wrapper {
     grid-area: slider;
     max-width: 100%;
     width: 100%;
+    aspect-ratio: 288 / 200;
+    @media #{$md-screen} {
+      aspect-ratio: 576 / 311;
+    }
+    @media #{$xxl-screen} {
+      aspect-ratio: 984 / 538;
+    }
   }
   &__form {
     grid-area: form;

@@ -1,17 +1,15 @@
 <template>
-  <dl class="unit-price">
-    <dd class="unit-price__value">
+  <div class="unit-price">
+    <span class="unit-price__value">
       {{ formatCurrency(price, false) }}
-    </dd>
-    <dt class="unit-price__name">
+    </span>
+    <span class="unit-price__name">
       ₽/шт.
-    </dt>
-  </dl>
+    </span>
+  </div>
 </template>
 
 <script setup lang="ts">
-import formatCurrency from '@/helpers/formatCurrency'
-
 defineProps<{
   price: number | string
 }>()

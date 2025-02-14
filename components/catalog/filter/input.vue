@@ -1,5 +1,7 @@
 <template>
-  <FloatLabel variant="on">
+  <FloatLabel
+    variant="on"
+  >
     <InputNumber
       v-model="updatedModelValue"
       :min="0"

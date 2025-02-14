@@ -1,4 +1,4 @@
-export default function formatCurrency(value: number | string, currencySymbol: boolean = true): string {
+function formatCurrency(value: number | string, currencySymbol: boolean = true): string {
   const formattedValue = Number(value).toLocaleString('ru-RU', {
     style: currencySymbol ? 'currency' : undefined,
     currency: 'RUB',
@@ -9,3 +9,5 @@ export default function formatCurrency(value: number | string, currencySymbol: b
   }
   return formattedValue
 }
+
+export default formatCurrency

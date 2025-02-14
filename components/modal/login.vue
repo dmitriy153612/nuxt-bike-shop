@@ -20,10 +20,10 @@
             <FloatLabel variant="on">
               <InputText
                 id="login-email"
-                v-model:model-value="initialValues.email"
+                v-model="initialValues.email"
                 name="email"
-                autocomplete="off"
                 fluid
+                autocomplete="on"
               />
               <label for="login-email">Email</label>
             </FloatLabel>
@@ -45,6 +45,7 @@
                 :feedback="false"
                 toggle-mask
                 fluid
+                :input-props="{ autocomplete: 'new-password' }"
               />
               <label for="login-password">Пароль</label>
             </FloatLabel>
@@ -119,7 +120,7 @@ async function onFormSubmit(e: FormSubmitEvent) {
     toast.add({
       severity: 'success',
       summary: 'Успешная авторизация',
-      life: 3000,
+      life: 1000,
     })
 
     authStore.showLoginModal(false)
@@ -134,7 +135,7 @@ async function onFormSubmit(e: FormSubmitEvent) {
     toast.add({
       severity: 'error',
       summary: 'Неверный Email или пароль',
-      life: 3000,
+      life: 1000,
     })
   }
   else if (authStore.loginError && authStore.loginError.status === 500) {
@@ -142,7 +143,7 @@ async function onFormSubmit(e: FormSubmitEvent) {
     toast.add({
       severity: 'error',
       summary: 'Ошибка сервера',
-      life: 3000,
+      life: 1000,
     })
   }
 }

@@ -20,7 +20,7 @@ export const BASKET_SELECT_PRODUCT_URL: string = `${BASE_API_URL}/cart/select-pr
 
 export const ORDER_GET_ORDER_URL: string = `${BASE_API_URL}/order`
 export const ORDER_GET_ORDER_CONFIG_URL: string = `${BASE_API_URL}/order-config`
-export const ORDER_CREATE_ORDER_URL: string = `${BASE_API_URL}/create-order`
 export const ORDER_DELIVERY_TYPES_URL: string = `${BASE_API_URL}/delivery-types`
 export const ORDER_PAYMENT_TYPES_URL: string = `${BASE_API_URL}/payment-types`
 export const ORDER_GET_PICKUP_POINTS_URL: string = `${BASE_API_URL}/pickup-points`
+export const ORDER_CREATE_ORDER_URL: string = `${BASE_API_URL}/create-order`

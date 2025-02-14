@@ -11,7 +11,10 @@
       />
     </Transition>
 
-    <Toast position="top-center" />
+    <Toast
+      position="top-center"
+      :style="{ width: 'min(300px, 96%)' }"
+    />
   </teleport>
 </template>
 

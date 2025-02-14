@@ -36,6 +36,11 @@
             :block-scroll="true"
             :visible="catalogStore.isFilterOpened"
             class="catalog-page__drawer"
+            :pt="{
+              root: { class: 'catalog-page__drawer' },
+              header: { class: 'catalog-page__drawer-header' },
+              content: { class: 'catalog-page__drawer-content' },
+            }"
             @update:visible="() => catalogStore.openFilter(false)"
           >
             <CatalogFilter />
@@ -136,6 +141,7 @@ function setSortingToRoute(sortingId: string) {
     'counter'
     'applied-filter'
     ;
+    padding-top: 24px;
     @media #{$md-screen} {
       grid-template-columns: auto 1fr;
       align-items: center;
@@ -158,6 +164,7 @@ function setSortingToRoute(sortingId: string) {
   &__counter {
     grid-area: counter;
     font-size: 18px;
+    color: $secondary;
   }
   &__applied-filter {
     grid-area: applied-filter;
@@ -179,6 +186,26 @@ function setSortingToRoute(sortingId: string) {
     display: none;
     @media #{$xxl-screen} {
       display: block;
+    }
+  }
+  &__drawer {
+    width: 240px !important;
+    background-color: $body;
+    &-header {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      justify-content: flex-end;
+      padding: 0;
+      & .p-drawer-close-button:focus-visible {
+        border-color: $primary;
+        border-width: 2px;
+        outline: none;
+        @include transition(border-color);
+      }
+    }
+    &-content {
+      padding: 0;
     }
   }
 }

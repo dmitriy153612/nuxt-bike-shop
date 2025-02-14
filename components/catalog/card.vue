@@ -29,7 +29,9 @@
         <Picker
           v-model="checkedSize"
           class="card__size-picker"
-          :sizes="card.sizes"
+          title="Доступные размеры:"
+          :options="card.sizes"
+          tilte-tag="h4"
         />
         <Price
           :price="card.price"
@@ -39,7 +41,7 @@
           class="card__btn"
           icon-name="basket"
           :show-spinner="isBtnSpinnerShown"
-          @click="fetchAddToBasket"
+          @click="AddToBasket"
         >
           В корзину
         </Btn>
@@ -49,19 +51,22 @@
 </template>
 
 <script setup lang="ts">
+import { useToast } from 'primevue/usetoast'
 import type { ICatalogCard } from '@/types/catalog'
 
 const props = defineProps<{
   card: ICatalogCard
 }>()
 
+const toast = useToast()
 const basketStore = useBasketStore()
+const authStore = useAuthStore()
 
 const checkedSize = ref(props.card.sizes[0]._id)
 
 const isBtnSpinnerShown = ref(false)
 
-async function fetchAddToBasket() {
+async function AddToBasket() {
   isBtnSpinnerShown.value = true
   await basketStore.fetchAddProduct({
     productId: props.card._id,
@@ -69,6 +74,15 @@ async function fetchAddToBasket() {
     amount: 1,
   })
   isBtnSpinnerShown.value = false
+
+  if (!basketStore.isFetchAddProductFailed && authStore.token) {
+    toast.add({
+      severity: 'success',
+      summary: 'Добавлено в корзину:',
+      detail: props.card.title,
+      life: 1000,
+    })
+  }
 }
 </script>
 

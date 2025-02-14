@@ -22,13 +22,16 @@
     <div class="form__size-picker-wrapper">
       <Picker
         v-model="checkedSizeId"
-        :sizes="sizes"
+        title="Доступные размеры:"
+        tilte-tag="h3"
+        :options="sizes"
       />
     </div>
 
     <Btn
       type="submit"
       class="form__submit"
+      icon-name="basket"
       :show-spinner="isSubmitSpinnerShown"
     >
       В корзину
@@ -37,10 +40,13 @@
 </template>
 
 <script setup lang="ts">
+import { useToast } from 'primevue/usetoast'
 import type { IFilterOption } from '@/types/catalog'
 
 const filterStore = useFilterStore()
 const basketStore = useBasketStore()
+const authStore = useAuthStore()
+const toast = useToast()
 
 const props = defineProps<{
   modelValue: string
@@ -49,6 +55,7 @@ const props = defineProps<{
   sizes: IFilterOption[]
   oldPrice?: string | number
   productId: string
+  title: string
 }>()
 
 const emit = defineEmits<{
@@ -71,6 +78,15 @@ async function addToBasket() {
     amount: 1,
   })
   isSubmitSpinnerShown.value = false
+
+  if (!basketStore.isFetchAddProductFailed && authStore.token) {
+    toast.add({
+      severity: 'success',
+      summary: 'Добавлено в корзину:',
+      detail: props.title,
+      life: 1000,
+    })
+  }
 }
 </script>
 

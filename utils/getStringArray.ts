@@ -1,4 +1,4 @@
-export default function getStringArray(value: unknown): string[] {
+function getStringArray(value: unknown): string[] {
   if (Array.isArray(value)) {
     return value.map(item => String(item))
   }
@@ -7,3 +7,5 @@ export default function getStringArray(value: unknown): string[] {
   }
   return []
 }
+
+export default getStringArray

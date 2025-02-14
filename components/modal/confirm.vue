@@ -18,7 +18,7 @@
         {{ btnResolveName }}
       </Btn>
       <Btn
-        v-if="!hideBtnCancel || !showSpinner"
+        v-if="!hideBtnCancel && !showSpinner"
         class="form__btn"
         type="submit"
         @click="closeModal"

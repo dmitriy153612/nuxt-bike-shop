@@ -24,6 +24,7 @@
         <NuxtImg
           class="card__img"
           loading="lazy"
+          alt="изображение байка"
           :src="product.picture"
         />
       </NuxtLink>
@@ -38,10 +39,6 @@
         <OptionDetails
           option-name="Размер"
           :option-value="product.size.name"
-        />
-        <OptionDetails
-          option-name="Цвет"
-          :option-value="product.color.name"
         />
       </div>
       <Price
@@ -67,7 +64,9 @@ const isAmountLoading = ref<boolean>(false)
 const updatedAmount = computed({
   get: () => props.product.amount,
   set: async (newValue) => {
-    const product: IBasketProduct | undefined = basketStore.updateBasketAmount(newValue, props.product.cartItemId)
+    const product: IBasketProduct | undefined = basketStore.updateBasketAmount(
+      newValue, props.product.cartItemId,
+    )
     debouncedUpdateAmount(product)
   },
 })
@@ -147,13 +146,18 @@ async function fetchUpdateAmount(product: IBasketProduct | undefined) {
     text-align: center;
     font-size: 22px;
     line-height: 1;
-    @media #{$sm-screen} {
-
-    }
+    color: $secondary;
   }
   &__link {
     grid-area: link;
     aspect-ratio: 256 / 142;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    outline: none;
+    @include transition(border-color);
+    &:focus-visible {
+      border-color: $primary;
+    }
     @media #{$sm-screen} {
       align-self: center;
       max-width: 200px;

@@ -1,26 +1,29 @@
 <template>
-  <div class="size-picker">
-    <h4 class="size-picker__title">
-      Доступные размеры:
-    </h4>
-    <ul class="size-picker__list">
+  <div class="picker">
+    <Component
+      :is="tilteTag"
+      class="picker__title"
+    >
+      {{ title }}
+    </Component>
+    <ul class="picker__list">
       <li
-        v-for="(size, index) in sizes"
+        v-for="(size, index) in options"
         :key="uniqIds[index]"
-        class="size-picker__item"
+        class="picker__item"
       >
         <input
           :id="uniqIds[index]"
           v-model="updatedModelValue"
           type="radio"
-          class="size-picker__input"
+          class="picker__input"
           :value="size._id"
         >
         <label
-          class="size-picker__label"
+          class="picker__label"
           :for="uniqIds[index]"
         >
-          <span class="size-picker__descr">{{ size.name }}</span>
+          <span class="picker__descr">{{ size.name }}</span>
         </label>
       </li>
     </ul>
@@ -31,15 +34,17 @@
 import type { IFilterOption } from '@/types/catalog'
 
 const props = defineProps<{
+  title: string
   modelValue: string
-  sizes: IFilterOption[]
+  options: IFilterOption[]
+  tilteTag: 'h3' | 'h4' | 'h5' | 'h6'
 }>()
 
 const emit = defineEmits<{
   (e: 'update:modelValue', modelValue: string): void
 }>()
 
-const uniqIds = Array.from({ length: props.sizes.length }, () => useId())
+const uniqIds = Array.from({ length: props.options.length }, () => useId())
 
 const updatedModelValue = computed({
   get: () => props.modelValue,
@@ -48,16 +53,19 @@ const updatedModelValue = computed({
 </script>
 
 <style lang="scss" scoped>
-.size-picker {
+.picker {
+  position: relative;
   margin: 0;
   padding: 0;
   border: none;
+  max-width: max-content;
 
   &__title {
     display: flex;
+    margin-bottom: 10px;
     font-size: 14px;
     font-weight: 400;
-    margin-bottom: 10px;
+    color: $secondary;
   }
 
   &__list {

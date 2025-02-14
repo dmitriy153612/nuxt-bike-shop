@@ -43,7 +43,7 @@ defineProps<{
 <style lang="scss" scoped>
 .product-info {
   padding-top: 32px;
-
+  color: $secondary;
   @media #{$md-screen} {
     padding-top: 48px;
   }

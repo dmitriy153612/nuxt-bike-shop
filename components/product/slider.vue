@@ -10,7 +10,7 @@
       <div class="slider__img-wrapper">
         <NuxtImg
           loading="lazy"
-          alt="фотография велосипеда"
+          alt="изображение байка"
           :src="slotProps.data"
           class="slider__img"
         />
@@ -47,8 +47,21 @@ onMounted(() => emit('load'))
   :deep(.p-carousel-next-button) {
     display: none;
     @media #{$md-screen} {
-      display: block;
+      display: flex;
+      outline: none;
+      &:focus-visible,
+      &:hover {
+        background-color: $primary;
+      }
     }
+  }
+  :deep(.p-carousel-indicator-button) {
+    &:focus-within{
+      outline: 2px solid $primary;
+    }
+  }
+  :deep(.p-carousel-indicator.p-carousel-indicator-active .p-carousel-indicator-button) {
+    background-color: $primary;
   }
 }
 </style>

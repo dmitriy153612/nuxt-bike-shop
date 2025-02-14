@@ -24,7 +24,9 @@ const productStore = useProductStore()
 const catalogBreadcrumb = { label: 'Каталог', path: '/' }
 const basketBreadcrumb = { label: 'Корзина', path: '/basket' }
 const orderBreadcrumb = { label: 'Оформление заказа', path: '/order' }
-const productBreadcrumb = computed(() => ({ label: productStore.product?.title || '', path: '' }))
+const productBreadcrumb = computed(() => {
+  return { label: productStore.product?.title || '', path: `/product/${productStore.product?._id}` }
+})
 
 const breadcrumbs = computed(() => {
   if (route.name === 'product-id') {

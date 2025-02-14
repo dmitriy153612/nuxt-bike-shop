@@ -2,11 +2,6 @@
 @use "./mixins" as mixins;
 
 :root {
-  // select
-  --p-select-border-color: #{variables.$secondary} !important;
-  --p-select-focus-border-color: #{variables.$primary} !important;
-  --p-select-option-focus-background: var(--p-gray-200) !important;
-
   // input
   --p-inputtext-focus-border-color: #{variables.$primary} !important;
   --p-inputtext-color: #{variables.$secondary} !important;
@@ -17,39 +12,32 @@
   --p-progressspinner-color-2: #{variables.$primary} !important;
   --p-progressspinner-color-3: #{variables.$primary} !important;
   --p-progressspinner-color-4: #{variables.$primary} !important;
-
-  // drawer
-  --p-drawer-header-padding: 0 !important;
-  --p-drawer-content-padding: 0 !important;
-
-  // toast
-  --p-toast-width: min(300px, 96%) !important;
-
-  // carousel
-  --p-carousel-indicator-active-background: #{variables.$primary} !important;
 }
 
-// drawer
-.p-drawer-header {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  justify-content: flex-end;
+//input
+.p-inputtext {
+  color: variables.$secondary !important;
 }
-.p-drawer {
-  width: 240px !important;
-}
-.p-drawer-close-button:focus-visible {
-  border-color: variables.$primary !important;
-  border-width: 2px !important;
-  outline: none !important;
-  @include mixins.transition(border-color);
+.p-inputtext,
+.p-floatlabel-on:has(input:focus) label,
+.p-floatlabel-on:has(input.p-filled) label,
+.p-floatlabel-on:has(input:-webkit-autofill) label,
+.p-floatlabel-on:has(textarea:focus) label,
+.p-floatlabel-on:has(textarea.p-filled) label,
+.p-floatlabel-on:has(.p-inputwrapper-focus) label,
+.p-floatlabel-on:has(.p-inputwrapper-filled) label {
+  background-color: variables.$body !important;
 }
 
-dialog
+//dialog
+.p-dialog.p-component {
+  background-color: variables.$body !important;
+  border: none !important;
+}
 .p-dialog-header {
   padding-top: 16px;
   padding-bottom: 0;
+  color: variables.$secondary !important;
 }
 .p-dialog-mask {
   padding: 16px;
@@ -61,4 +49,25 @@ dialog
     border-color: variables.$primary !important;
     border-width: 2px !important;
   }
+}
+
+//select
+.p-select-overlay {
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: variables.$body !important;
+  color: variables.$secondary !important;
+  border-color: variables.$primary !important;
+}
+.p-select-option-label {
+  color: variables.$secondary !important;
+}
+.p-select-option:not(.p-select-option-selected):not(.p-disabled).p-focus {
+  background-color: variables.$secondary300 !important;
+}
+.p-select-list-container, .p-select-list, .p-select-overlay {
+  background-color: variables.$body !important;
+}
+.p-select-option-check-icon {
+  color: variables.$secondary !important;
 }

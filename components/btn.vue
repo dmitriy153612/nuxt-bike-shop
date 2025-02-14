@@ -160,11 +160,14 @@ const btnClass = ref({
     display: flex;
     font-size: 0;
   }
-
   &__badge {
     position: absolute;
     top: -5%;
     right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 18px;
     padding: 2px 4px;
     background-color: $primary;
     border-radius: 50%;

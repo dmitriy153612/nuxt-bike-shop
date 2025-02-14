@@ -1,6 +1,6 @@
 <template>
   <div class="counter">
-    <div class="counter__control">
+    <div class="counter__inner">
       <Btn
         class="counter__btn"
         appearance="icon"
@@ -62,6 +62,11 @@ function decrease() {
 .counter {
   display: grid;
   max-width: max-content;
+  &__inner {
+    display: flex;
+    column-gap: 4px;
+    flex-wrap: nowrap;
+  }
   &__output {
     display: flex;
     align-items: center;
@@ -69,17 +74,7 @@ function decrease() {
     padding-inline: 4px;
     min-width: 40px;
     font-size: 24px;
-  }
-  &__control {
-    display: flex;
-    column-gap: 4px;
-    flex-wrap: nowrap;
-    :deep(.p-inputnumber-input) {
-        padding: 0px;
-        font-size: 24px;
-        text-align: center;
-        max-width: 40px;
-    }
+    color: $secondary;
   }
 }
 </style>

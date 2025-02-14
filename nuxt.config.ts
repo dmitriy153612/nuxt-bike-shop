@@ -1,10 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import Aura from '@primevue/themes/aura'
-import { definePreset } from '@primevue/themes'
 
-const MyPreset = definePreset(Aura, {
-
-})
 export default defineNuxtConfig({
   modules: [
     '@primevue/nuxt-module',
@@ -22,7 +18,7 @@ export default defineNuxtConfig({
       meta: [
         {
           name: 'viewport',
-          content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no',
+          content: 'width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes',
         },
         {
           name: 'description',
@@ -36,9 +32,6 @@ export default defineNuxtConfig({
     },
   },
   css: ['normalize.css', '@/assets/css/main.scss'],
-  build: {
-    analyze: false,
-  },
   routeRules: {
     '/': {
       redirect: '/catalog?page=1',
@@ -77,7 +70,7 @@ export default defineNuxtConfig({
   primevue: {
     options: {
       theme: {
-        preset: MyPreset,
+        preset: Aura,
       },
     },
     autoImport: false,
@@ -94,6 +87,7 @@ export default defineNuxtConfig({
         'Message',
         'Password',
         'Carousel',
+        'InputMask',
       ],
     },
   },

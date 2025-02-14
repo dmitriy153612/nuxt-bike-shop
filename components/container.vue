@@ -1,23 +1,22 @@
 <template>
-  <div
+  <component
+    :is="tag"
     class="container"
-    :class="containerClass"
+    :class="{ 'container--main': tag === 'main' }"
   >
     <slot />
-  </div>
+  </component>
 </template>
 
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-  type?: 'content' | 'box'
-}>(), {
-  type: 'content',
-})
-
-const containerClass = ref({
-  'container--content': props.type === 'content',
-  'container--box': props.type === 'box',
-})
+withDefaults(
+  defineProps<{
+    tag?: 'div' | 'main'
+  }>(),
+  {
+    tag: 'div',
+  },
+)
 </script>
 
 <style scoped lang="scss">
@@ -26,25 +25,27 @@ const containerClass = ref({
   max-width: $container-max-width;
   margin-inline: auto;
   padding-inline: 16px;
-
   @media #{$md-screen} {
     padding-inline: 32px;
   }
-
   @media #{$xxl-screen} {
     padding-inline: 40px;
   }
 
-  &--content {
+  &--main {
     padding-top: 16px;
-    @media #{$md-screen} {
+    padding-bottom: 24px;
+    @media #{$sm-screen} {
       padding-top: 20px;
+      padding-bottom: 32px;
     }
     @media #{$md-screen} {
       padding-top: 28px;
+      padding-bottom: 40px;
     }
     @media #{$xxl-screen} {
       padding-top: 32px;
+      padding-inline: 40px;
     }
   }
 }

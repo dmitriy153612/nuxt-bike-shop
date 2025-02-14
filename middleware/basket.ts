@@ -4,10 +4,7 @@ export default defineNuxtRouteMiddleware(async () => {
     return await navigateTo('/catalog')
   }
 
-  const { showPageSpinner } = useGlobalStore()
   const { fetchGetBasket } = useBasketStore()
 
-  showPageSpinner(true)
   await fetchGetBasket()
-  showPageSpinner(false)
 })

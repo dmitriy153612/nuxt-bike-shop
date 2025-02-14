@@ -41,6 +41,7 @@
           Применить
         </Btn>
         <Btn
+          v-if="!isFilterEmpty"
           class="filter__btn"
           :disabled="isFilterEmpty"
           @click.prevent="resetFilter"
@@ -53,7 +54,6 @@
 </template>
 
 <script setup lang="ts">
-import getStringArray from '@/helpers/getStringArray'
 import type { IFilter } from '@/types/catalog'
 
 const filterStore = useFilterStore()
@@ -137,6 +137,7 @@ watch(() => route.query, setFilterFromRoute, { immediate: true })
 
   &__title {
     font-size: 20px;
+    color: $secondary;
   }
   &__inputs {
     display: grid;
